@@ -1,0 +1,9 @@
+# VS Code 설정 폴더
+.vscode/
+
+# VS Code 백업 파일
+*.code-workspace
+*.code-search
+
+# VS Code 사용자 정의 히스토리 (간혹 생김)
+.history/
