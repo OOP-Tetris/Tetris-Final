@@ -2,12 +2,12 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
-#define EXT_KEY			0xffffffe0	//확장키 인식값 
-#define KEY_LEFT		0x4b
-#define KEY_RIGHT		0x4d
-#define KEY_UP			0x48
-#define KEY_DOWN		0x50
-#define K				0x6B
+
+#define EXT_KEY 0xffffffe0
+#define KEY_LEFT 0x4b
+#define KEY_RIGHT 0x4d
+#define KEY_UP 0x48
+#define KEY_DOWN 0x50
 
 using namespace std;
 
@@ -17,6 +17,7 @@ Game::Game() {
     lines = 0;
     level = 0;
     is_gameover = 0;
+    cleared = false;
     stages = new Stages();
 }
 
@@ -28,43 +29,49 @@ Game::~Game() {
 }
 
 void Game::run() {
-    //cout << level << endl;
+    score = 0;
+    lines = 0;
+    if (is_gameover == 3) {
+        printer->show_logo();
+    }
+    is_gameover = 0;
+    cleared = false;
+
+
+    init();
+
+    curr_block = new Block(stages->get_stick_rate(level));
+    next_block = new Block(stages->get_stick_rate(level));
+    block_start(curr_block);
+
+    printer->show_next_block(*next_block, level);
+    printer->show_total_block(total_block, level);
+    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+    printer->show_cur_block(*curr_block);
+    cout << "start loop";
+    play_loop();
+
+    if (is_gameover == 3) {
+        printer->show_logo();
+    }
+    if (is_gameover == 1) {
         score = 0;
         lines = 0;
-        if (is_gameover == 3) {
-            printer->show_logo();
-        }
         is_gameover = 0;
 
 
         init();
-
-        curr_block = new Block(stages->get_stick_rate(level));
-        next_block = new Block(stages->get_stick_rate(level));
-        block_start(curr_block);
-
-        printer->show_next_block(*next_block, level);
-        printer->show_total_block(total_block, level);
-        printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-        printer->show_cur_block(*curr_block);
-        play_loop();
-
-        if (is_gameover == 3) {
-            printer->show_logo();
-        }
-        if (is_gameover == 1) {
-            score = 0;
-            lines = 0;
-            is_gameover = 0;
-
-
-            init();
-            return;
-        }
+        return;
+    }
+    if (is_gameover == 4) {
+        return;
+    }
 }
 
 void Game::play_loop() {
     for (int i = 1;; i++) {
+        printer->gotoxy(50, 1);
+        cout << level;
         if (_kbhit()) {
             keytemp = _getche();
             if (keytemp == EXT_KEY) {
@@ -100,11 +107,6 @@ void Game::play_loop() {
                 while (_kbhit()) (void)_getch();
             }
 
-            /*if (tolower(keytemp) == K) {
-				keep();
-                continue;
-			}*/
-
             if (keytemp == 32) {
                 while (is_gameover == 0) {
                     is_gameover = move_block();
@@ -126,13 +128,16 @@ void Game::play_loop() {
             is_gameover = 0;
             while (_kbhit()) (void)_getch();
             system("cls");
-            break;
+            return;
         }
 
         if (is_gameover == 3) {
             while (_kbhit()) (void)_getch();
             system("cls");
-            break;
+            return;
+        }
+        if (is_gameover == 4) {
+            return;
         }
 
         printer->gotoxy(77, 23);
@@ -141,20 +146,6 @@ void Game::play_loop() {
     }
 }
 
-
-int Game::input_data() {
-    char ch[5];
-    while (1) {
-        printer->show_keys();
-        fgets(ch, sizeof(ch), stdin);
-        if (strlen(ch) == 2 && ch[1] == '\n' && ch[0] >= '1' && ch[0] <= '8') {
-            level = ch[0] - '1';
-            break;
-        }
-        system("cls");
-    }
-    return 0;
-}
 
 int Game::rotate() {
     int old_angle = curr_block->get_angle();
@@ -190,6 +181,9 @@ int Game::merge_block()
         return 3;
     }
     printer->show_total_block(total_block, level);
+    if (is_clear == 4) {
+        return 4;
+    }
 
     return 0;
 }
@@ -213,11 +207,13 @@ int Game::check_full_line()
 
 
             if (stages->get_clear_line(level) <= lines) {
-                if (level < 9) {
+                if (level < 10) {
                     lines = 0;
                     level++;
-                    init(); 
+                    init();
+                    cleared = true;
                     printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+                    return 4;
                 }
                 //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
                 else {
@@ -262,6 +258,7 @@ int Game::check_full_line()
 
     }
 
+
     return 0;
 }
 
@@ -272,16 +269,16 @@ void Game::reset_stage() {
 
 // 0: 현재 블럭 저장, 1: 킵했던 블럭 사용
 int Game::keep() {
-	if (keeped_block != nullptr) {
-		Block* temp = curr_block;
-		curr_block = keeped_block;
-		keeped_block = nullptr;
+    if (keeped_block != nullptr) {
+        Block* temp = curr_block;
+        curr_block = keeped_block;
+        keeped_block = nullptr;
 
         delete next_block;
-		next_block = temp;
+        next_block = temp;
 
-		temp = nullptr;
-	}
+        temp = nullptr;
+    }
     else {
         keeped_block = curr_block;
         curr_block = next_block;
@@ -290,11 +287,11 @@ int Game::keep() {
     }
     printer->show_next_block(*next_block, level);
 
-	if (level == 0 || level == 3 || level == 6) {
-		curr_block->start_Reversed();
-	}
-	else {
-        curr_block -> start();
-	}
-	return 0;
+    if (level == 0 || level == 3 || level == 6) {
+        curr_block->start_Reversed();
+    }
+    else {
+        curr_block->start();
+    }
+    return 0;
 }

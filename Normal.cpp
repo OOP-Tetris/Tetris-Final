@@ -1,53 +1,44 @@
 ﻿#include "Normal.h"
 
 void Normal::init() {
-    for (int i = 0; i < 20; i++)
-        for (int j = 0; j < 14; j++)
-            total_block[i][j] = (j == 0 || j == 13) ? 1 : 0;
-    for (int j = 0; j < 14; j++) total_block[20][j] = 1;
-    lines = 0;
+	for (int i = 0; i < 20; i++)
+		for (int j = 0; j < 14; j++)
+			total_block[i][j] = (j == 0 || j == 13) ? 1 : 0;
+	for (int j = 0; j < 14; j++) total_block[20][j] = 1;
+	lines = 0;
 }
 
 void Normal::block_start(Block* b) {
-    b->start();
+	b->start();
 }
 
 int Normal::strike_check() {
-	int block_dat;
 	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			int x = curr_block->get_x() + j;
-			int y = curr_block->get_y() + i;
-
-			if (y < 0 || y >= 21 || x < 0 || x >= 14) continue;
-
-			if (x == 0 || x == 13) block_dat = 1;
-			else block_dat = total_block[y][x];
-
-			if ((block_dat == 1) && curr_block->get_number(i, j) == 1) {
-				return 1;
+		for (int j = 0; j < 4; j++) {
+			if (curr_block->get_number(i, j) == 1) {
+				int x = curr_block->get_x() + j;
+				int y = curr_block->get_y() + i;
+				if (x < 0 || x >= 14 || y >= 21 || total_block[y][x])
+					return 1;
 			}
 		}
-	}
-    return 0;
+	return 0;
 }
 
 int Normal::move_block()
 {
 	printer->erase_cur_block(*curr_block);
 
-	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
+	curr_block->move_down();	//블럭을 한칸 아래로 내림
 	if (strike_check() == 1)
 	{
-		//ÀÌ ³»¿ëÀº »õ·Î Ãß°¡µÈ ºÎºÐÀ¸·Î ±âÁ¸¿¡ ÀÌ ÄÚµå°¡ ¾ø¾úÀ» ¶§´Â ºí·ÏÀÇ À§Ä¡°¡ -3¿¡¼­ ½ÃÀÛÇÏ´Â °æ¿ì¿¡ ´ëÇØ¼­ ±× »óÈ²¿¡¼­ ¹æÇâ Á¶ÀÛÅ°¸¦ ÀÔ·ÂÇÏ°í ½ºÆäÀÌ½º¸¦ ÀÔ·ÂÇÏ´Â °æ¿ì °©ÀÚ±â °ÔÀÓ Á¾·áµÇ´Â ¹®Á¦°¡ ÀÖ¾î¼­ ÄÚµå¸¦ Ãß°¡Çß½À´Ï´Ù
+		//이 내용은 새로 추가된 부분으로 기존에 이 코드가 없었을 때는 블록의 위치가 -3에서 시작하는 경우에 대해서 그 상황에서 방향 조작키를 입력하고 스페이스를 입력하는 경우 갑자기 게임 종료되는 문제가 있어서 코드를 추가했습니다
 		if (curr_block->get_y() < 0) {
 			return 0;
 		}
 
 		curr_block->move_up();
-		if (curr_block->get_y() < 0)	//°ÔÀÓ¿À¹ö
+		if (curr_block->get_y() < 0)	//게임오버
 		{
 
 			//printer->SetColor(3);
@@ -62,7 +53,7 @@ int Normal::move_block()
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
 							printer->gotoxy(dx * 2 + printer->get_x(), dy + printer->get_y());
-							printf("¡á");
+							printf("■");
 						}
 					}
 				}
@@ -80,7 +71,11 @@ int Normal::move_block()
 		}
 		delete curr_block;
 		curr_block = next_block;
-		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
+		//만약 클리어한 라인의 수가 깨야되는 줄의 반이라면 콤보가 발동해 다음블록은 무조건 일자 블록이 나온다
+
+		if (is_over == 4) {
+			return 4;
+		}
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
 			next_block = new Block(stages->get_stick_rate(level), true);
 		}
