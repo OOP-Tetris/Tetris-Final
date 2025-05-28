@@ -1,31 +1,99 @@
-#include "Normal.h"
+#include "Maze.h"
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
-void Normal::init() {
-    for (int i = 0; i < 20; i++)
-        for (int j = 0; j < 14; j++)
-            total_block[i][j] = (j == 0 || j == 13) ? 1 : 0;
-    for (int j = 0; j < 14; j++) total_block[20][j] = 1;
-    lines = 0;
+Maze::Maze():Game()
+{
+	clearedRows = 0;
+	srand((unsigned)time(NULL));
 }
 
-void Normal::block_start(Block* b) {
-    b->start();
+void Maze::makeMaze(char total_block[21][14])
+{
+
+	switch (level)
+	{
+	case 2:
+		rows = 5;
+		spaceNum = 2;
+		break;
+	case 5:
+		rows = 6;
+		spaceNum = 3;
+		break;
+	case 8:
+		rows = 7;
+		spaceNum = 4;
+		break;
+	default:
+		rows = 0;
+		spaceNum = 0;
+		break;
+	}
+
+
+	int rowStart = 20 - rows;
+	for (int i = 0; i < rows; i++) {
+		vector<int> spaceIdx;
+		for (int j = 1; j < 13; j++) {
+			spaceIdx.push_back(j);
+			total_block[rowStart + i][j] = 1;
+		}
+		random_shuffle(spaceIdx.begin(), spaceIdx.end());
+		for (int j = 0; j < spaceNum; j++) {
+			total_block[rowStart + i][spaceIdx[j]] = 0;
+		}
+	}
 }
 
-int Normal::strike_check() {
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
-            if (curr_block->get_number(i, j) == 1) {
-                int x = curr_block->get_x() + j;
-                int y = curr_block->get_y() + i;
-                if (x < 0 || x >= 14 || y >= 21 || total_block[y][x])
-                    return 1;
-            }
-        }
-    return 0;
+bool Maze::isCleared() const {
+	int checkStart = 20 - rows;
+
+	for (int i = checkStart; i < 20; i++) {
+		for (int j = 1; j < 13; j++) {
+			if (total_block[i][j] != 0) {
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
-int Normal::move_block()
+
+void Maze::init() {
+	for (int i = 0; i < 20; i++)
+		for (int j = 0; j < 14; j++)
+			total_block[i][j] = (j == 0 || j == 13) ? 1 : 0;
+	for (int j = 0; j < 14; j++) total_block[20][j] = 1;
+
+	makeMaze(total_block);  // 변경된 함수 호출
+	printer->show_total_block(total_block, level);
+
+	lines = 0;
+	cleared = false;
+}
+
+void Maze::block_start(Block* b) {
+	b->start();
+}
+
+int Maze::strike_check() {
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 4; j++) {
+			if (curr_block->get_number(i, j) == 1) {
+				int x = curr_block->get_x() + j;
+				int y = curr_block->get_y() + i;
+				if (x < 0 || x >= 14 || y >= 21 || total_block[y][x])
+					return 1;
+			}
+		}
+	return 0;
+}
+
+
+
+int Maze::move_block()
 {
 	printer->erase_cur_block(*curr_block);
 
