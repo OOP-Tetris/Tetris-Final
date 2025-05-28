@@ -1,4 +1,4 @@
-#include "Normal.h"
+ï»¿#include "Normal.h"
 
 void Normal::init() {
     for (int i = 0; i < 20; i++)
@@ -13,15 +13,24 @@ void Normal::block_start(Block* b) {
 }
 
 int Normal::strike_check() {
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
-            if (curr_block->get_number(i, j) == 1) {
-                int x = curr_block->get_x() + j;
-                int y = curr_block->get_y() + i;
-                if (x < 0 || x >= 14 || y >= 21 || total_block[y][x])
-                    return 1;
-            }
-        }
+	int block_dat;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			int x = curr_block->get_x() + j;
+			int y = curr_block->get_y() + i;
+
+			if (y < 0 || y >= 21 || x < 0 || x >= 14) continue;
+
+			if (x == 0 || x == 13) block_dat = 1;
+			else block_dat = total_block[y][x];
+
+			if ((block_dat == 1) && curr_block->get_number(i, j) == 1) {
+				return 1;
+			}
+		}
+	}
     return 0;
 }
 
@@ -29,16 +38,16 @@ int Normal::move_block()
 {
 	printer->erase_cur_block(*curr_block);
 
-	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
+	curr_block->move_down();	//ÂºÃ­Â·Â°Ã€Â» Ã‡Ã‘Ã„Â­ Â¾Ã†Â·Â¡Â·ÃŽ Â³Â»Â¸Â²
 	if (strike_check() == 1)
 	{
-		//ÀÌ ³»¿ëÀº »õ·Î Ãß°¡µÈ ºÎºÐÀ¸·Î ±âÁ¸¿¡ ÀÌ ÄÚµå°¡ ¾ø¾úÀ» ¶§´Â ºí·ÏÀÇ À§Ä¡°¡ -3¿¡¼­ ½ÃÀÛÇÏ´Â °æ¿ì¿¡ ´ëÇØ¼­ ±× »óÈ²¿¡¼­ ¹æÇâ Á¶ÀÛÅ°¸¦ ÀÔ·ÂÇÏ°í ½ºÆäÀÌ½º¸¦ ÀÔ·ÂÇÏ´Â °æ¿ì °©ÀÚ±â °ÔÀÓ Á¾·áµÇ´Â ¹®Á¦°¡ ÀÖ¾î¼­ ÄÚµå¸¦ Ãß°¡Çß½À´Ï´Ù
+		//Ã€ÃŒ Â³Â»Â¿Ã«Ã€Âº Â»ÃµÂ·ÃŽ ÃƒÃŸÂ°Â¡ÂµÃˆ ÂºÃŽÂºÃÃ€Â¸Â·ÃŽ Â±Ã¢ÃÂ¸Â¿Â¡ Ã€ÃŒ Ã„ÃšÂµÃ¥Â°Â¡ Â¾Ã¸Â¾ÃºÃ€Â» Â¶Â§Â´Ã‚ ÂºÃ­Â·ÃÃ€Ã‡ Ã€Â§Ã„Â¡Â°Â¡ -3Â¿Â¡Â¼Â­ Â½ÃƒÃ€Ã›Ã‡ÃÂ´Ã‚ Â°Ã¦Â¿Ã¬Â¿Â¡ Â´Ã«Ã‡Ã˜Â¼Â­ Â±Ã— Â»Ã³ÃˆÂ²Â¿Â¡Â¼Â­ Â¹Ã¦Ã‡Ã¢ ÃÂ¶Ã€Ã›Ã…Â°Â¸Â¦ Ã€Ã”Â·Ã‚Ã‡ÃÂ°Ã­ Â½ÂºÃ†Ã¤Ã€ÃŒÂ½ÂºÂ¸Â¦ Ã€Ã”Â·Ã‚Ã‡ÃÂ´Ã‚ Â°Ã¦Â¿Ã¬ Â°Â©Ã€ÃšÂ±Ã¢ Â°Ã”Ã€Ã“ ÃÂ¾Â·Ã¡ÂµÃ‡Â´Ã‚ Â¹Â®ÃÂ¦Â°Â¡ Ã€Ã–Â¾Ã®Â¼Â­ Ã„ÃšÂµÃ¥Â¸Â¦ ÃƒÃŸÂ°Â¡Ã‡ÃŸÂ½Ã€Â´ÃÂ´Ã™
 		if (curr_block->get_y() < 0) {
 			return 0;
 		}
 
 		curr_block->move_up();
-		if (curr_block->get_y() < 0)	//°ÔÀÓ¿À¹ö
+		if (curr_block->get_y() < 0)	//Â°Ã”Ã€Ã“Â¿Ã€Â¹Ã¶
 		{
 
 			//printer->SetColor(3);
@@ -53,7 +62,7 @@ int Normal::move_block()
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
 							printer->gotoxy(dx * 2 + printer->get_x(), dy + printer->get_y());
-							printf("¡á");
+							printf("Â¡Ã¡");
 						}
 					}
 				}
@@ -71,7 +80,7 @@ int Normal::move_block()
 		}
 		delete curr_block;
 		curr_block = next_block;
-		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
+		//Â¸Â¸Â¾Ã  Ã…Â¬Â¸Â®Â¾Ã®Ã‡Ã‘ Â¶Ã³Ã€ÃŽÃ€Ã‡ Â¼Ã¶Â°Â¡ Â±ÃºÂ¾ÃŸÂµÃ‡Â´Ã‚ ÃÃ™Ã€Ã‡ Â¹ÃÃ€ÃŒÂ¶Ã³Â¸Ã© Ã„ÃžÂºÂ¸Â°Â¡ Â¹ÃŸÂµÂ¿Ã‡Ã˜ Â´Ã™Ã€Â½ÂºÃ­Â·ÃÃ€Âº Â¹Â«ÃÂ¶Â°Ã‡ Ã€ÃÃ€Ãš ÂºÃ­Â·ÃÃ€ÃŒ Â³ÂªÂ¿Ã‚Â´Ã™
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
 			next_block = new Block(stages->get_stick_rate(level), true);
 		}

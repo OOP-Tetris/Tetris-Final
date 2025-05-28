@@ -1,4 +1,4 @@
-#include "Reverse.h"
+﻿#include "Reverse.h"
 #include<iostream>
 
 void Reverse::init() {
@@ -24,18 +24,25 @@ int Reverse::strike_check() {
     }
 
 
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
-            if (curr_block->get_number(i, j) == 1) {
-                int x = curr_block->get_x() + j;
-                int y = curr_block->get_y() + i;
-				if (x < 0 || x >= 14 || y < 0 || total_block[y][x] == 1) {
-					return 1;
-				}
-                    
-            }
-        }
-    return 0;
+	int block_dat;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			int x = curr_block->get_x() + j;
+			int y = curr_block->get_y() + i;
+
+			if (y < 0 || y >= 21 || x < 0 || x >= 14) continue;
+
+			if (x == 0 || x == 13) block_dat = 1;
+			else block_dat = total_block[y][x];
+
+			if ((block_dat == 1) && curr_block->get_number(i, j) == 1) {
+				return 1;
+			}
+		}
+	}
+	return 0;
 
 	
 }

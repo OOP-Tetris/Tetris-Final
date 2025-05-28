@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Stages.h"
 #include "Block.h"
 #include "Printer.h"
@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 class Game {
-    private:
+    protected:
         int level;
         int score;
         int lines;
