@@ -1,7 +1,9 @@
 #include "GameManager.h"
 #include "Normal.h"
+#include "Maze.h"
 #include "Reverse.h"
 #include <iostream>
+#include <conio.h>
 
 int GameManager::input_level() {
 	int i = 0;
@@ -40,30 +42,57 @@ int GameManager::input_level() {
 		}
 	}
 	system("cls");
-	return i-1;
+	return i - 1;
 }
 
 void GameManager::run() {
-    printer.hideCursor();
-    printer.show_logo();
-    std::cout << "\nPress Enter to start...\n";
+	printer.hideCursor();
+	printer.show_logo();
+	std::cout << "\nPress Enter to start...\n";
+	while (1) {
+		int manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
+		system("cls");
+
+		while (manager_level < 10) { // GameManager의 레벨이 9 미만일 때만 루프
+			Game* game = nullptr;
+
+			if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
+				game = new Reverse();
+			}
+			else if (manager_level == 2 || manager_level == 5 || manager_level == 8) {
+				game = new Maze();
+			}
+			else {
+				game = new Normal();
+			}
+
+			game->setLevel(manager_level); // GameManager의 레벨을 새로 생성된 Game 객체에 전달
+
+			game->run(); // 게임 플레이 시작. 이 함수가 종료되어야 다음 코드 실행.
+
+			// Game 객체 내부에서 cleared가 true로 설정되었는지 확인
+			bool game_cleared_result = game->getCleared();
+			// Game 객체 내부에서 실제로 레벨이 몇으로 바뀌었는지 확인 (디버깅용)
+			int final_game_level = game->getLevel();
 
 
-    while (true) {
 
-        int level = input_level();
-        system("cls");
+			// ★★★ 여기가 중요: Game 객체가 클리어되었고, Game 객체 내부 레벨이 GameManager의 레벨보다 높다면
+			// (즉, 레벨업이 발생했다면) GameManager의 레벨도 업데이트합니다.
+			if (game_cleared_result && final_game_level > manager_level) { // 클리어되었는지 확인
+				manager_level = final_game_level; // ★★★ GameManager의 레벨을 Game 객체의 최종 레벨로 업데이트!;
+			}
+			else if (!game_cleared_result && final_game_level == 10) {
+				printer.show_clear_screen(game->getScore());
+			}
+			else {
+				break;
+			}
+			system("cls");
 
-        Game* game = nullptr;
-        if (level == 0 || level == 3 || level == 6)
-            game = new Reverse();
-        else
-            game = new Normal();
-        //std::cout << level;
 
-        game->setLevel(level);
-        game->run();
+		}
+	}
 
-        system("cls");
-    }
+
 }
