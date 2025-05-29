@@ -1,0 +1,20 @@
+# .editorconfig for Visual Studio + C++ on Windows
+root = true
+
+# 모든 파일에 대한 기본 설정
+[*]
+charset = utf-8-bom           # Windows/Visual Studio 친화적: BOM 포함 UTF-8
+end_of_line = crlf            # Windows 스타일 줄바꿈 (CRLF)
+insert_final_newline = true   # 파일 끝에 빈 줄 추가
+trim_trailing_whitespace = true  # 불필요한 공백 제거
+
+# C++ 소스/헤더 파일
+[*.{cpp,hpp,c,h}]
+indent_style = space
+indent_size = 4
+
+# Visual Studio 프로젝트 파일 (.vcxproj, .filters, .sln 등)
+[*.{vcxproj,filters,sln}]
+indent_style = space
+indent_size = 2
+

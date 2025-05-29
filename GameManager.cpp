@@ -1,4 +1,4 @@
-#include "GameManager.h"
+﻿#include "GameManager.h"
 #include "Normal.h"
 #include "Maze.h"
 #include "Reverse.h"

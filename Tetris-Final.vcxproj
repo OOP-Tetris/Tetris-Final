@@ -131,6 +131,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Maze.h" />
     <ClInclude Include="Normal.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="Reverse.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Normal.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Reverse.cpp" />

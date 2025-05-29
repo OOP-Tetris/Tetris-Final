@@ -23,7 +23,6 @@ protected:
     Block* keeped_block;
     bool cleared = false;
 public:
-
     Game();
     virtual ~Game();
 

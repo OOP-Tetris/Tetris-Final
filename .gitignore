@@ -1,5 +1,6 @@
-# VS Code 설정 폴더
+# 설정 폴더
 .vscode/
+.vs/
 
 # VS Code 백업 파일
 *.code-workspace
@@ -7,3 +8,9 @@
 
 # VS Code 사용자 정의 히스토리 (간혹 생김)
 .history/
+
+Test-Final/
+
+*.vcxproj.user
+
+x64/
