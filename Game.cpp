@@ -100,7 +100,7 @@ void Game::play_loop() {
     }
 }
 
-int Game::operate_key(const int keytemp) {
+int Game::operate_key(int keytemp) {
     if (keytemp == EXT_KEY) {
         keytemp = _getche();
         switch (keytemp) {

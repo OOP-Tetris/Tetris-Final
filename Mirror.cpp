@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Mirror::Mirror(): Game() {
+Mirror::Mirror(): Normal() {
     srand(unsigned(time(0))); // Seed for random number generation
     up = KEY_UP;
     down = KEY_DOWN;
@@ -17,38 +17,36 @@ Mirror::~Mirror() {
     // Destructor implementation if needed
 }
 
-void Mirror::init() {
-    
-}
-
-int Mirror::operate_key(const int keytemp) {
+int Mirror::operate_key(int keytemp) {
     if (keytemp == EXT_KEY) {
         keytemp = _getche();
-        switch (keytemp) {
-            case up:
-                rotate();
-                break;
-            case left:
-                if (curr_block->get_x() > 1) {
-                    printer->erase_cur_block(*curr_block);
-                    curr_block->move_left();
-                    if (strike_check()) curr_block->move_right();
-                    printer->show_cur_block(*curr_block);
-                }
-                break;
-            case right:
-                if (curr_block->get_x() < 14) {
-                    printer->erase_cur_block(*curr_block);
-                    curr_block->move_right();
-                    if (strike_check()) curr_block->move_left();
-                    printer->show_cur_block(*curr_block);
-                }
-                break;
-            case down:
-                is_gameover = move_block();
-                if (is_gameover != 1 && is_gameover != 3)
-                    printer->show_cur_block(*curr_block);
-                break;
+
+        if (keytemp == up) {
+            rotate();
+        }
+
+        if (keytemp == left) {
+            if (curr_block->get_x() > 1) {
+                printer->erase_cur_block(*curr_block);
+                curr_block->move_left();
+                if (strike_check()) curr_block->move_right();
+                printer->show_cur_block(*curr_block);
+            }
+        }
+
+        if (keytemp == right) {
+            if (curr_block->get_x() < 14) {
+                printer->erase_cur_block(*curr_block);
+                curr_block->move_right();
+                if (strike_check()) curr_block->move_left();
+                printer->show_cur_block(*curr_block);
+            }
+        }
+
+        if (keytemp == down) {
+            is_gameover = move_block();
+            if (is_gameover != 1 && is_gameover != 3)
+                printer->show_cur_block(*curr_block);
         }
     }
     else {
@@ -129,11 +127,9 @@ int Mirror::move_block()
 		if (is_over == 3) {
 			return 3;
 		}
-        if (is_over == 5) {
-            random_key();
-        }
 		delete curr_block;
 		curr_block = next_block;
+        random_key();
 		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
 			next_block = new Block(stages->get_stick_rate(level), true);

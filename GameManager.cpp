@@ -2,6 +2,7 @@
 #include "Normal.h"
 #include "Maze.h"
 #include "Reverse.h"
+#include "Mirror.h"
 #include <iostream>
 #include <conio.h>
 
