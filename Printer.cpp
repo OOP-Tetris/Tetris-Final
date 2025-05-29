@@ -1,4 +1,4 @@
-#include "Printer.h"
+﻿#include "Printer.h"
 #include "iostream"
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -154,6 +154,31 @@ int Printer::show_next_block(Block& block, int level)
 
 	show_cur_block(block);
 	return 0;
+}
+
+int Printer::show_keeped_block(Block& block, int level)
+{
+    int i, j;
+    SetColor((level%6)+1);
+    for (i = 1; i < 7; i++)
+    {
+        gotoxy(45, i);
+        for (j = 0; j < 8; j++)
+        {
+            if (i == 1 || i == 6 || j == 0 || j == 4)
+            {
+                printf("■");
+            }
+            else printf("  ");
+        }
+    }
+
+    block.rotate(0);
+    block.movetoxy(21, 1);
+
+    show_cur_block(block);
+
+    return 0;
 }
 
 //가장 처음 테트리스 로고와 시작창을 보이게 하는 함수
