@@ -37,6 +37,7 @@ public:
     virtual int strike_check() = 0;
     virtual void block_start(Block* b) = 0;
     virtual void reset_stage();
+    virtual int operate_key(const int keytemp);
 
     void run(); // 공통 게임 루프
     void play_loop();
