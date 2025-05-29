@@ -7,6 +7,12 @@
 #include <conio.h>
 #include <Windows.h>
 
+#define EXT_KEY 0xffffffe0
+#define KEY_LEFT 0x4b
+#define KEY_RIGHT 0x4d
+#define KEY_UP 0x48
+#define KEY_DOWN 0x50
+
 class Game {
 protected:
     int level;
@@ -31,6 +37,7 @@ public:
     virtual int strike_check() = 0;
     virtual void block_start(Block* b) = 0;
     virtual void reset_stage();
+    virtual int operate_key(int keytemp);
 
     void run(); // 공통 게임 루프
     void play_loop();

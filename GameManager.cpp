@@ -2,6 +2,7 @@
 #include "Normal.h"
 #include "Maze.h"
 #include "Reverse.h"
+#include "Mirror.h"
 #include <iostream>
 #include <conio.h>
 
@@ -59,6 +60,9 @@ void GameManager::run() {
 			if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
 				game = new Reverse();
 			}
+			else if (manager_level == 1 || manager_level == 4 || manager_level == 7) {
+				game = new Mirror();
+			}
 			else if (manager_level == 2 || manager_level == 5 || manager_level == 8) {
 				game = new Maze();
 			}
@@ -93,6 +97,7 @@ void GameManager::run() {
 
 		}
 	}
+	
 
 
 }
