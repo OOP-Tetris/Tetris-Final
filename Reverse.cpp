@@ -12,6 +12,7 @@ void Reverse::block_start(Block* b) {
     b->start_Reversed();
 }
 
+//충돌이 일어났을 때 병합되는 과정에서 블록 중 일부가 게임판 바깥을 벗어났는 지 확인 이 프로그램에서는 이 함수 호출 시에는 늘 충돌이 발생했을 때 호출된다는 점 아시고 보면 이해가 더 빠릅니다
 bool Reverse::check_overflow()
 {
 	
@@ -22,11 +23,13 @@ bool Reverse::check_overflow()
 			if (curr_block->get_number(i, j) == 1) {
 				int x = curr_block->get_x() + j;
 				int y = curr_block->get_y() + i;
+				//충돌 발생한 블록의 일부가 게임 화면의 영역을 벗어나면 게임 종료조건을 충족하기 때문에 true를 반환합니다
 				if (y >= 20) {
 					return true;
 				}
 			}
 		}
+	//아니면 false반환
 	return false;
 }
 
@@ -74,47 +77,24 @@ int Reverse::strike_check() {
 }
 
 int Reverse::move_block() {
-	//기존 코드 대신에 새로운 코드를 작성했습니다
-  /*  printer->erase_cur_block(*curr_block);
-    curr_block->move_up();
-    if (strike_check() == 1) {
-
-
-        curr_block->move_down();
-        if (curr_block->get_y() > 20) return 1;
-        merge_block();
-        curr_block = next_block;
-        next_block = new Block(stages->get_stick_rate(level));
-        block_start(curr_block);
-        printer->show_next_block(*next_block, level);
-    }
-    printer->show_cur_block(*curr_block);
-    return 0;*/
-
 	printer->erase_cur_block(*curr_block);
 
 	curr_block->move_up();	
 
+
 	if (strike_check() == 1)
 	{	
 		curr_block->move_down();
-		
+		//블록이 충돌한 경우에 대해서 게임 화면을 벗어나는 지를 확인하는 함수로 게임화면을 벗어나면 true를 반환하며 이 경우 게임 클리어 실패로 판별되어 false가 반환됩니다
 		if (check_overflow()) {
-			/*printer->SetColor(3);
-			printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
-			system("pause");*/
 			return 1;
 		}
 		if (curr_block->get_y() >= 20 )	//게임오버 조건 21이 아니라 20이어야 합니다
 		{
-			/*printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
-			system("pause");*/
 			Sleep(100);
 			return 1;
 		}
-		
-		
-		
+	
 
 		int is_over = merge_block();
 
