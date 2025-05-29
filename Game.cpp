@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
@@ -270,9 +270,12 @@ void Game::reset_stage() {
 
 // 0: 현재 블럭 저장, 1: 킵했던 블럭 사용
 int Game::keep() {
+    printer->erase_cur_block(*curr_block);
+
     if (keeped_block != nullptr) {
         Block* temp = curr_block;
         curr_block = keeped_block;
+        printer->erase_cur_block(*keeped_block);
         keeped_block = nullptr;
 
         delete next_block;
@@ -285,7 +288,10 @@ int Game::keep() {
         curr_block = next_block;
 
         next_block = new Block(stages->get_stick_rate(level));
+
+        printer->show_keeped_block(*keeped_block, level);
     }
+
     printer->show_next_block(*next_block, level);
 
     if (level == 0 || level == 3 || level == 6) {
@@ -294,5 +300,8 @@ int Game::keep() {
     else {
         curr_block->start();
     }
+
+    block_start(curr_block);
+
     return 0;
 }
