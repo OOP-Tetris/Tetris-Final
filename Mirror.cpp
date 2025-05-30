@@ -137,8 +137,10 @@ int Mirror::move_block()
 		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
 			next_block = new Block(stages->get_stick_rate(level), true);
-		}
-		next_block = new Block(stages->get_stick_rate(level));
+        }else{
+            next_block = new Block(stages->get_stick_rate(level));
+        }
+		
 		printer->show_next_block(*next_block, level);
 		curr_block->start();
 		printer->show_next_block(*next_block, level);
