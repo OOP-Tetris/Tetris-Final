@@ -163,8 +163,10 @@ int Maze::move_block()
 		}
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
 			next_block = new Block(stages->get_stick_rate(level), true);
-		}
-		next_block = new Block(stages->get_stick_rate(level));
+		}else{
+            next_block = new Block(stages->get_stick_rate(level));    
+        }
+		
 		printer->show_next_block(*next_block, level);
 		curr_block->start();
 		printer->show_next_block(*next_block, level);
