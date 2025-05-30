@@ -283,7 +283,7 @@ int Printer::show_total_block(char total_block[21][14], int level) {
 		SetColor((level % 6) + 1);
 		for (j = 0; j < 14; j++) {
 			gotoxy((j * 2) + ab_x, ab_y);
-			printf("��");
+			printf("■");
 		}
 	}
 	SetColor(BLACK);
@@ -355,4 +355,33 @@ int Printer::show_gameover()
 	system("cls");
 
 	return 0;
+}
+
+void Printer::show_ghostBlock(Block& b)
+{
+    SetColor(GRAY);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (b.get_number(i, j)) {
+                int x = b.get_x() + j;
+                int y = b.get_y() + i;
+                gotoxy(x * 2 + ab_x, y + ab_y);
+                printf("▦");
+            }
+        }
+    }
+}
+
+void Printer::erase_ghostBlock(Block& b)
+{
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (b.get_number(i, j)) {
+                int x = b.get_x() + j;
+                int y = b.get_y() + i;
+                gotoxy(x * 2 + ab_x, y + ab_y);
+                printf(" ");
+            }
+        }
+    }
 }

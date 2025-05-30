@@ -15,15 +15,15 @@ void Maze::makeMaze(char total_block[21][14])
 	switch (level)
 	{
 	case 2:
-		rows = 5;
+		rows = 2;
 		spaceNum = 2;
 		break;
 	case 5:
-		rows = 6;
+		rows = 3;
 		spaceNum = 3;
 		break;
 	case 8:
-		rows = 7;
+		rows = 4;
 		spaceNum = 4;
 		break;
 	default:
@@ -47,17 +47,33 @@ void Maze::makeMaze(char total_block[21][14])
 	}
 }
 
-bool Maze::isCleared() const {
-	int checkStart = 20 - rows;
+bool Maze::isCleared() {
+    int checkStart = 20 - (rows - clearedRows); // 아직 안 사라진 줄의 시작점
 
-	for (int i = checkStart; i < 20; i++) {
-		for (int j = 1; j < 13; j++) {
-			if (total_block[i][j] != 0) {
-				return false;
-			}
-		}
-	}
-	return true;
+    // 가장 아래 한 줄만 검사
+    for (int j = 1; j < 13; j++) {
+        if (total_block[checkStart][j] == 0) {
+            return false; // 한 칸이라도 비었으면 아직 클리어 아님
+        }
+    }
+
+    // 꽉 찼으면 줄 없애고 clearedRows 증가
+    for (int j = 1; j < 13; j++) {
+        total_block[checkStart][j] = 0;
+    }
+
+    for (int i = checkStart; i > 0; i--) {
+        for (int j = 1; j < 13; j++) {
+            total_block[i][j] = total_block[i - 1][j];
+        }
+    }
+    for (int j = 1; j < 13; j++) {
+        total_block[0][j] = 0;
+    }
+
+    clearedRows++;
+
+    return clearedRows == rows;
 }
 
 
@@ -77,6 +93,7 @@ void Maze::init() {
 void Maze::block_start(Block* b) {
 	b->start();
 }
+
 
 int Maze::strike_check() {
 	for (int i = 0; i < 4; i++)

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include "Game.h"
 
@@ -7,19 +7,18 @@ using namespace std;
 class Maze : public Game
 {
 private:
-	//int level;		// ·¹º§º° row¼ö¿Í °¢ ÁÙ¿¡ ³ªÅ¸³ª´Â ºóÄ­ °³¼ö Á¶Á¤
-	int rows;		// ÃÑ ÁÙ ¼ö
-	int spaceNum;	// ÇÑ ÁÙ¿¡ ³ªÅ¸³ª´Â ºóÄ­ °³¼ö
-	int clearedRows; // ±úÁø ¹Ì·Î ÁÙ ¼ö
+	//int level;		// ë ˆë²¨ë³„ rowìˆ˜ì™€ ê° ì¤„ì— ë‚˜íƒ€ë‚˜ëŠ” ë¹ˆì¹¸ ê°œìˆ˜ ì¡°ì •
+	int rows;		// ì´ ì¤„ ìˆ˜
+	int spaceNum;	// í•œ ì¤„ì— ë‚˜íƒ€ë‚˜ëŠ” ë¹ˆì¹¸ ê°œìˆ˜
+	int clearedRows; // ê¹¨ì§„ ë¯¸ë¡œ ì¤„ ìˆ˜
 public:
 	Maze();
 	void makeMaze(char total_block[21][14]);
-	bool isCleared() const;
+	bool isCleared() override;
 	void init() override;
 	int move_block() override;
 	int strike_check() override;
 	void block_start(Block* b) override;
-
 };
 
 

@@ -28,6 +28,7 @@ protected:
     Block* next_block;
     Block* keeped_block;
     bool cleared = false;
+    Block* prev_ghostBlock = nullptr;
 public:
     Game();
     virtual ~Game();
@@ -38,11 +39,12 @@ public:
     virtual void block_start(Block* b) = 0;
     virtual void reset_stage();
     virtual int operate_key(int keytemp);
+    virtual bool isCleared() = 0;
 
     void run(); // 공통 게임 루프
     void play_loop();
     int merge_block();
-    int check_full_line();
+    virtual int check_full_line();
     int rotate();
     void setLevel(int le) {
         level = le;
@@ -58,5 +60,8 @@ public:
     int getScore() {
         return score;
     }
+    // 어디에 떨어질지 미리 보여주기
+    virtual void draw_ghostBlock();
+    virtual bool check_collision(Block* b);
 
 };

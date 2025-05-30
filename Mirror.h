@@ -15,5 +15,6 @@ public:
     int operate_key(int tempkey) override;
     int random_key();
     int move_block() override;
+    bool isCleared() override;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Game.h"
 
 class Normal : public Game {
@@ -7,5 +7,6 @@ public:
     int move_block() override;
     int strike_check() override;
     void block_start(Block* b) override;
+    bool isCleared() override;
 };
 

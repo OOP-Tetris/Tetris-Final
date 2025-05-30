@@ -23,6 +23,7 @@ int Mirror::operate_key(int keytemp) {
 
         if (keytemp == up) {
             rotate();
+            draw_ghostBlock();
         }
 
         if (keytemp == left) {
@@ -31,6 +32,7 @@ int Mirror::operate_key(int keytemp) {
                 curr_block->move_left();
                 if (strike_check()) curr_block->move_right();
                 printer->show_cur_block(*curr_block);
+                draw_ghostBlock();
             }
         }
 
@@ -40,6 +42,7 @@ int Mirror::operate_key(int keytemp) {
                 curr_block->move_right();
                 if (strike_check()) curr_block->move_left();
                 printer->show_cur_block(*curr_block);
+                draw_ghostBlock();
             }
         }
 
@@ -47,6 +50,7 @@ int Mirror::operate_key(int keytemp) {
             is_gameover = move_block();
             if (is_gameover != 1 && is_gameover != 3)
                 printer->show_cur_block(*curr_block);
+            draw_ghostBlock();
         }
     }
     else {
@@ -143,4 +147,10 @@ int Mirror::move_block()
 	printer->erase_cur_block(*curr_block);
 
 	return 0;
+}
+
+bool Mirror::isCleared()
+{
+    if (stages->get_clear_line(level) <= lines) return true;
+    else return false;
 }

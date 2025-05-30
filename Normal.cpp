@@ -12,6 +12,12 @@ void Normal::block_start(Block* b) {
     b->start();
 }
 
+bool Normal::isCleared()
+{
+    if (stages->get_clear_line(level) <= lines) return true;
+    else return false;
+}
+
 int Normal::strike_check() {
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++) {

@@ -35,4 +35,6 @@ class Printer {
         int show_gamestat(int level, int score, int lines_left);
         int show_clear_screen(int score);
         int show_gameover();
+        void show_ghostBlock(Block& b);
+        void erase_ghostBlock(Block& b);
 };

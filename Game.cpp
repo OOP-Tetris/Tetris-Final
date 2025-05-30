@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
@@ -41,8 +41,8 @@ void Game::run() {
     printer->show_total_block(total_block, level);
     printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
     printer->show_cur_block(*curr_block);
-    
-    cout << "start loop";
+
+    draw_ghostBlock();
     play_loop();
 
     if (is_gameover == 3) {
@@ -106,6 +106,7 @@ int Game::operate_key(int keytemp) {
         switch (keytemp) {
             case KEY_UP:
                 rotate();
+                draw_ghostBlock();
                 break;
             case KEY_LEFT:
                 if (curr_block->get_x() > 1) {
@@ -113,6 +114,7 @@ int Game::operate_key(int keytemp) {
                     curr_block->move_left();
                     if (strike_check()) curr_block->move_right();
                     printer->show_cur_block(*curr_block);
+                    draw_ghostBlock();
                 }
                 break;
             case KEY_RIGHT:
@@ -121,19 +123,20 @@ int Game::operate_key(int keytemp) {
                     curr_block->move_right();
                     if (strike_check()) curr_block->move_left();
                     printer->show_cur_block(*curr_block);
+                    draw_ghostBlock();
                 }
                 break;
             case KEY_DOWN:
                 is_gameover = move_block();
                 if (is_gameover != 1 && is_gameover != 3)
                     printer->show_cur_block(*curr_block);
+                draw_ghostBlock();
                 break;
         }
     }
     else {
         while (_kbhit()) (void)_getch();
     }
-
     if (keytemp == 32) {
         while (is_gameover == 0) {
             is_gameover = move_block();
@@ -198,7 +201,7 @@ int Game::check_full_line()
             if (total_block[i][j] == 0)
                 break;
         }
-        if (j == 13)	//한줄이 다 채워졌음
+        if (j == 13)   //한줄이 다 채워졌음
         {
 
             lines++;
@@ -206,7 +209,7 @@ int Game::check_full_line()
 
 
 
-            if (stages->get_clear_line(level) <= lines) {
+            if (isCleared()) {
                 if (level < 10) {
                     lines = 0;
                     level++;
@@ -226,6 +229,7 @@ int Game::check_full_line()
                     lines = 0;
                     printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
                     if (printer->show_clear_screen(score)) return 3;
+
                 }
             }
 
@@ -263,6 +267,7 @@ int Game::check_full_line()
 
     return 0;
 }
+
 
 void Game::reset_stage() {
     init();
@@ -304,4 +309,38 @@ int Game::keep() {
     block_start(curr_block);
 
     return 0;
+}
+
+void Game::draw_ghostBlock()
+{
+    if (prev_ghostBlock != nullptr) {
+        printer->erase_ghostBlock(*prev_ghostBlock);
+        delete prev_ghostBlock;
+        prev_ghostBlock = nullptr;
+    }
+
+    Block* ghostBlock = new Block(*curr_block);
+    while (true) {
+        ghostBlock->move_down();
+        if (check_collision(ghostBlock)) {
+            ghostBlock->move_up();
+            break;
+        }
+    }
+    printer->show_ghostBlock(*ghostBlock);
+    prev_ghostBlock = ghostBlock;
+}
+
+bool Game::check_collision(Block* b)
+{
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            if (b->get_number(i, j) == 1) {
+                int x = b->get_x() + j;
+                int y = b->get_y() + i;
+                if (x < 0 || x >= 14 || y >= 21 || total_block[y][x])
+                    return true;
+            }
+        }
+    return false;
 }
