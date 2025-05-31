@@ -372,7 +372,7 @@ void Printer::show_ghostBlock(Block& b)
     }
 }
 
-void Printer::erase_ghostBlock(Block& b)
+void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
 {
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -380,8 +380,16 @@ void Printer::erase_ghostBlock(Block& b)
                 int x = b.get_x() + j;
                 int y = b.get_y() + i;
                 gotoxy(x * 2 + ab_x, y + ab_y);
-                printf(" ");
+
+                if (total_block[y][x]) {
+                    SetColor(DARK_GRAY);
+                    printf("■");
+                }
+                else {
+                    printf("  ");
+                }
             }
         }
     }
 }
+

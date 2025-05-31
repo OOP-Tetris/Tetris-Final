@@ -72,6 +72,7 @@ void Game::play_loop() {
 
         if (i % stages->get_speed(level) == 0) {
             is_gameover = move_block();
+            draw_ghostBlock();
             if (is_gameover != 1 && is_gameover != 3)
                 printer->show_cur_block(*curr_block);
         }
@@ -314,7 +315,7 @@ int Game::keep() {
 void Game::draw_ghostBlock()
 {
     if (prev_ghostBlock != nullptr) {
-        printer->erase_ghostBlock(*prev_ghostBlock);
+        printer->erase_ghostBlock(*prev_ghostBlock, total_block);
         delete prev_ghostBlock;
         prev_ghostBlock = nullptr;
     }
@@ -327,9 +328,12 @@ void Game::draw_ghostBlock()
             break;
         }
     }
+
     printer->show_ghostBlock(*ghostBlock);
     prev_ghostBlock = ghostBlock;
 }
+
+
 
 bool Game::check_collision(Block* b)
 {
