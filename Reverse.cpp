@@ -1,4 +1,4 @@
-#include "Reverse.h"
+﻿#include "Reverse.h"
 #include<iostream>
 
 Reverse::Reverse()
@@ -122,10 +122,62 @@ int Reverse::check_full_line()
 
 void Reverse::draw_ghostBlock()
 {
+    if (prev_ghostBlock != nullptr) {
+        printer->erase_ghostBlock(*prev_ghostBlock, total_block);
+        delete prev_ghostBlock;
+        prev_ghostBlock = nullptr;
+    }
+
+    Block* ghostBlock = new Block(*curr_block);
+    while (true) {
+        ghostBlock->move_up();
+        if (check_collision(ghostBlock)) {
+            ghostBlock->move_down();
+            break;
+        }
+    }
+    printer->show_ghostBlock(*ghostBlock);
+    prev_ghostBlock = ghostBlock;
 }
 
 bool Reverse::check_collision(Block* b)
 {
+    //바닥 도달 시 1반환
+    if (b->get_y() <= 0) {
+        return true;
+    }
+
+    //추가된 조건들 21이상이면 계속 내려오게 충돌 설정을 피합니다
+    if (b->get_y() >= 21) {
+
+        //조건 추가 좌우 장벽에 충돌하는 경우에 대한 예외처리를 위해 이중 for문을 이용해 현재 블록이 위치한 좌표가 좌우 경계를 넘어가면
+        //1을 반환하게 바꿨습니다
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++) {
+                if (b->get_number(i, j) == 1) {
+                    int x = b->get_x() + j;
+                    int y = b->get_y() + i;
+                    if (x < 0 || x >= 13) {
+                        return true;
+                    }
+
+                }
+            }
+        //좌우 충돌하지 않는 경우에 대해서는 0반환
+        return false;
+    }
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            if (b->get_number(i, j) == 1) {
+                int x = b->get_x() + j;
+                int y = b->get_y() + i;
+                if (x < 0 || x >= 13 || y < 0 || total_block[y][x] == 1) {
+                    return true;
+                }
+
+            }
+        }
     return false;
 }
 
