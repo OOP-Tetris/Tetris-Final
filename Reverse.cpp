@@ -1,4 +1,4 @@
-﻿#include "Reverse.h"
+#include "Reverse.h"
 #include<iostream>
 
 Reverse::Reverse()
@@ -16,6 +16,11 @@ void Reverse::init() {
 
 void Reverse::block_start(Block* b) {
     b->start_Reversed();
+}
+
+bool Reverse::isCleared()
+{
+    return false;
 }
 
 //충돌이 일어났을 때 병합되는 과정에서 블록 중 일부가 게임판 바깥을 벗어났는 지 확인 이 프로그램에서는 이 함수 호출 시에는 늘 충돌이 발생했을 때 호출된다는 점 아시고 보면 이해가 더 빠릅니다
@@ -113,6 +118,15 @@ int Reverse::check_full_line()
 
     }
     return 0;
+}
+
+void Reverse::draw_ghostBlock()
+{
+}
+
+bool Reverse::check_collision(Block* b)
+{
+    return false;
 }
 
 int Reverse::strike_check() {
