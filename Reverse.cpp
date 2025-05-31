@@ -20,7 +20,7 @@ void Reverse::block_start(Block* b) {
 
 bool Reverse::isCleared()
 {
-    return false;
+    return cleared;
 }
 
 //충돌이 일어났을 때 병합되는 과정에서 블록 중 일부가 게임판 바깥을 벗어났는 지 확인 이 프로그램에서는 이 함수 호출 시에는 늘 충돌이 발생했을 때 호출된다는 점 아시고 보면 이해가 더 빠릅니다

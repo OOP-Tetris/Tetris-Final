@@ -72,6 +72,10 @@ bool Maze::isCleared() {
     }
 
     clearedRows++;
+    if (clearedRows == rows) {
+        cleared = true;
+        return true;
+    }
 
     return clearedRows == rows;
 }
