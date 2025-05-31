@@ -211,6 +211,8 @@ int Reverse::strike_check() {
             if (curr_block->get_number(i, j) == 1) {
                 int x = curr_block->get_x() + j;
                 int y = curr_block->get_y() + i;
+                //추가된 내용 이 내용이 없으면 y가 21 이상인 경우 아래 if조건문이 참이 되는 희한한 상황이 생겨서 추가함
+                if(y >= 21){continue;}
 				if (x < 0 || x >= 13 || y < 0 || total_block[y][x] == 1) {
 					return 1;
 				}
