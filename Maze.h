@@ -19,6 +19,7 @@ public:
 	int move_block() override;
 	int strike_check() override;
 	void block_start(Block* b) override;
+    int check_full_line() override;
 };
 
 

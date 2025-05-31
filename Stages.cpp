@@ -18,7 +18,7 @@ Stages::Stages() {
 	stage_data[4].clear_line=2;
 	stage_data[5].speed=20;
 	stage_data[5].stick_rate=14;
-	stage_data[5].clear_line=2;
+	stage_data[5].clear_line=3;
 	stage_data[6].speed=15;
 	stage_data[6].stick_rate=14;
 	stage_data[6].clear_line=2;
@@ -27,7 +27,7 @@ Stages::Stages() {
 	stage_data[7].clear_line=2;
 	stage_data[8].speed=6;
 	stage_data[8].stick_rate=12;
-	stage_data[8].clear_line=2;
+	stage_data[8].clear_line=4;
 	stage_data[9].speed=4;
 	stage_data[9].stick_rate=11;
 	stage_data[9].clear_line=2;

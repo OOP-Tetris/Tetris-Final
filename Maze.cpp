@@ -98,6 +98,83 @@ void Maze::block_start(Block* b) {
 	b->start();
 }
 
+int Maze::check_full_line()
+{
+    int i, j, k;
+    int cleared_lines = 0;
+
+    for (i = 0; i < 20; i++)
+    {
+        for (j = 1; j < 13; j++)
+        {
+            if (total_block[i][j] == 0)
+                break;
+        }
+        if (j == 13)   //한줄이 다 채워졌음
+        {
+            lines++;
+            cleared_lines++;
+
+            //줄과 레벨 확인
+            if (isCleared()) {
+                if (level < 10) {
+                    lines = 0;
+                    level++;
+                    init();
+                    cleared = true;
+                    printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
+                    return 4;
+                }
+                //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
+                else {
+                    //show_clear_screen이라는 것에서 1의 값을 받으면 3을 반환
+                    // --> merge_block()에서 이 값에 따른 반환값을 만들도록함
+                    //메인 함수에서 is_game_over이 3일때 break함
+                    //이때 화면에서 show_logo()가 잘 보이지 않는다는 것을 확인하여 show_logo() 앞 cls를 통해 지우고 다시 그리도록 함.
+
+                    printer->show_total_block(total_block, level);
+                    lines = 0;
+                    printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
+                    if (printer->show_clear_screen(score)) return 3;
+                }
+            }
+
+            printer->show_total_block(total_block, level);
+            printer->SetColor(BLUE);
+            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            for (j = 1; j < 13; j++)
+            {
+                printf("□");
+                Sleep(10);
+            }
+            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            for (j = 1; j < 13; j++)
+            {
+                printf("  ");
+                Sleep(10);
+            }
+
+            for (k = i; k > 0; k--)
+            {
+                for (j = 1; j < 13; j++)
+                    total_block[k][j] = total_block[k - 1][j];
+            }
+            for (j = 1; j < 13; j++)
+                total_block[0][j] = 0;
+
+            score += 100 + (level * 10) + (rand() % 10);
+            printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
+
+            i--; // 같은 줄을 다시 검사
+        }
+    }
+
+    if (cleared_lines > 0)
+        return 5;
+
+    return 0;
+}
+
 
 int Maze::strike_check() {
 	for (int i = 0; i < 4; i++)
