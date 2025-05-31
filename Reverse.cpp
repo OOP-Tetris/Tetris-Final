@@ -129,11 +129,6 @@ void Reverse::draw_ghostBlock()
     }
 
     Block* ghostBlock = new Block(*curr_block);
-<<<<<<< HEAD
-    while (true) {
-        ghostBlock->move_up();
-        if (check_collision(ghostBlock)) {
-=======
 
     // 맵 안쪽까지만 고스트 위치를 이동시켜서 유효한 위치 찾기
     while (true) {
@@ -147,22 +142,18 @@ void Reverse::draw_ghostBlock()
         }
 
         if (gy <= 0) {
->>>>>>> 74a0771 (고스트 블럭 적용 버전)
             ghostBlock->move_down();
             break;
         }
     }
-<<<<<<< HEAD
-=======
 
     // 맵에 올라오기 전이라면 고스트 출력하지 않음 (즉, 아래에서 대기 중일 때는 안 보임)
-    if (ghostBlock->get_y() >= 25) {
+    if (ghostBlock->get_y() >= 20) {
         delete ghostBlock;
         prev_ghostBlock = nullptr;
         return;
     }
 
->>>>>>> 74a0771 (고스트 블럭 적용 버전)
     printer->show_ghostBlock(*ghostBlock);
     prev_ghostBlock = ghostBlock;
 }
@@ -170,44 +161,6 @@ void Reverse::draw_ghostBlock()
 
 bool Reverse::check_collision(Block* b)
 {
-<<<<<<< HEAD
-    //바닥 도달 시 1반환
-    if (b->get_y() <= 0) {
-        return true;
-    }
-
-    //추가된 조건들 21이상이면 계속 내려오게 충돌 설정을 피합니다
-    if (b->get_y() >= 21) {
-
-        //조건 추가 좌우 장벽에 충돌하는 경우에 대한 예외처리를 위해 이중 for문을 이용해 현재 블록이 위치한 좌표가 좌우 경계를 넘어가면
-        //1을 반환하게 바꿨습니다
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++) {
-                if (b->get_number(i, j) == 1) {
-                    int x = b->get_x() + j;
-                    int y = b->get_y() + i;
-                    if (x < 0 || x >= 13) {
-                        return true;
-                    }
-
-                }
-            }
-        //좌우 충돌하지 않는 경우에 대해서는 0반환
-        return false;
-    }
-
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
-            if (b->get_number(i, j) == 1) {
-                int x = b->get_x() + j;
-                int y = b->get_y() + i;
-                if (x < 0 || x >= 13 || y < 0 || total_block[y][x] == 1) {
-                    return true;
-                }
-
-            }
-        }
-=======
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             if (b->get_number(i, j)) {
@@ -222,7 +175,6 @@ bool Reverse::check_collision(Block* b)
             }
         }
     }
->>>>>>> 74a0771 (고스트 블럭 적용 버전)
     return false;
 }
 
