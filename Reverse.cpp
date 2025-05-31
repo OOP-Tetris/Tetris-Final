@@ -129,19 +129,48 @@ void Reverse::draw_ghostBlock()
     }
 
     Block* ghostBlock = new Block(*curr_block);
+<<<<<<< HEAD
     while (true) {
         ghostBlock->move_up();
         if (check_collision(ghostBlock)) {
+=======
+
+    // 맵 안쪽까지만 고스트 위치를 이동시켜서 유효한 위치 찾기
+    while (true) {
+        ghostBlock->move_up();
+
+        int gy = ghostBlock->get_y();
+
+        if (check_collision(ghostBlock)) {
+            ghostBlock->move_down(); // 마지막 유효 위치
+            break;
+        }
+
+        if (gy <= 0) {
+>>>>>>> 74a0771 (고스트 블럭 적용 버전)
             ghostBlock->move_down();
             break;
         }
     }
+<<<<<<< HEAD
+=======
+
+    // 맵에 올라오기 전이라면 고스트 출력하지 않음 (즉, 아래에서 대기 중일 때는 안 보임)
+    if (ghostBlock->get_y() >= 25) {
+        delete ghostBlock;
+        prev_ghostBlock = nullptr;
+        return;
+    }
+
+>>>>>>> 74a0771 (고스트 블럭 적용 버전)
     printer->show_ghostBlock(*ghostBlock);
     prev_ghostBlock = ghostBlock;
 }
 
+
 bool Reverse::check_collision(Block* b)
 {
+<<<<<<< HEAD
     //바닥 도달 시 1반환
     if (b->get_y() <= 0) {
         return true;
@@ -178,6 +207,22 @@ bool Reverse::check_collision(Block* b)
 
             }
         }
+=======
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (b->get_number(i, j)) {
+                int x = b->get_x() + j;
+                int y = b->get_y() + i;
+
+                if (x < 0 || x >= 14 || y < 0 || y >= 21)
+                    return true;
+
+                if (total_block[y][x] == 1)
+                    return true;
+            }
+        }
+    }
+>>>>>>> 74a0771 (고스트 블럭 적용 버전)
     return false;
 }
 
@@ -275,6 +320,7 @@ int Reverse::move_block() {
 		
 		printer->show_next_block(*next_block, level);
 		curr_block->start_Reversed();
+        draw_ghostBlock();
 		printer->show_next_block(*next_block, level);
 		return 2;
 	

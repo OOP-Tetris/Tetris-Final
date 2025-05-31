@@ -195,6 +195,8 @@ int Game::merge_block()
 int Game::check_full_line()
 {
     int i, j, k;
+    int cleared_lines = 0;
+
     for (i = 0; i < 20; i++)
     {
         for (j = 1; j < 13; j++)
@@ -204,12 +206,10 @@ int Game::check_full_line()
         }
         if (j == 13)   //한줄이 다 채워졌음
         {
-
             lines++;
+            cleared_lines++;
+
             //줄과 레벨 확인
-
-
-
             if (isCleared()) {
                 if (level < 10) {
                     lines = 0;
@@ -230,7 +230,6 @@ int Game::check_full_line()
                     lines = 0;
                     printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
                     if (printer->show_clear_screen(score)) return 3;
-
                 }
             }
 
@@ -256,18 +255,20 @@ int Game::check_full_line()
             }
             for (j = 1; j < 13; j++)
                 total_block[0][j] = 0;
+
             score += 100 + (level * 10) + (rand() % 10);
             printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-            i--;
 
-            return 5;
+            i--; // 같은 줄을 다시 검사
         }
-
     }
 
+    if (cleared_lines > 0)
+        return 5;
 
     return 0;
 }
+
 
 
 void Game::reset_stage() {

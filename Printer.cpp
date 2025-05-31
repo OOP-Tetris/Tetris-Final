@@ -365,12 +365,17 @@ void Printer::show_ghostBlock(Block& b)
             if (b.get_number(i, j)) {
                 int x = b.get_x() + j;
                 int y = b.get_y() + i;
-                gotoxy(x * 2 + ab_x, y + ab_y);
-                printf("▦");
+
+                // 맵 내부에 있을 때만 출력
+                if (y >= 0 && y < 21 && x >= 0 && x < 14) {
+                    gotoxy(x * 2 + ab_x, y + ab_y);
+                    printf("▦");
+                }
             }
         }
     }
 }
+
 
 void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
 {
@@ -379,6 +384,10 @@ void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
             if (b.get_number(i, j)) {
                 int x = b.get_x() + j;
                 int y = b.get_y() + i;
+
+                if (x < 0 || x >= 14 || y < 0 || y >= 21)
+                    continue; // 범위 밖이면 skip
+
                 gotoxy(x * 2 + ab_x, y + ab_y);
 
                 if (total_block[y][x]) {
@@ -392,4 +401,5 @@ void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
         }
     }
 }
+
 
