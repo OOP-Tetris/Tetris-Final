@@ -3,6 +3,7 @@
 
 class Reverse : public Game {
 public:
+    Reverse();
     void init() override;
     int move_block() override;
     int strike_check() override;
