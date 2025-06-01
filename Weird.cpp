@@ -1,0 +1,61 @@
+﻿#include "Weird.h"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
+Weird::Weird() : Reverse(), Maze() {
+}
+
+void Weird::init() {
+    Reverse::init();
+
+    makeMaze(total_block);  // º¯°æµÈ ÇÔ¼ö È£Ãâ
+    printer->show_total_block(total_block, level);
+}
+
+int Weird::move_block() {
+    return Reverse::move_block();
+}
+int Weird::strike_check() {
+    return Reverse::strike_check();
+}
+
+void Weird::block_start(Block* b) {
+    Reverse::block_start(b);
+}
+
+bool Weird::isCleared() {
+    return Maze::isCleared();
+}
+
+int Weird::check_full_line() {
+    return Reverse::check_full_line();
+}
+
+void Weird::draw_ghostBlock() {
+    Reverse::draw_ghostBlock();
+}
+
+bool Weird::check_collision(Block* b) {
+    return Reverse::check_collision(b);
+}
+
+void Weird::makeMaze(char total_block[21][14])
+{
+    rows = 5;
+    spaceNum = 5;
+
+    int rowStart = 0;
+    for (int i = 0; i < rows; i++) {
+        vector<int> spaceIdx;
+        for (int j = 1; j < 13; j++) {
+            spaceIdx.push_back(j);
+            total_block[rowStart + i][j] = 1;
+        }
+        random_shuffle(spaceIdx.begin(), spaceIdx.end());
+        for (int j = 0; j < spaceNum; j++) {
+            total_block[rowStart + i][spaceIdx[j]] = 0;
+        }
+    }
+}

@@ -26,6 +26,10 @@ void Maze::makeMaze(char total_block[21][14])
 		rows = 4;
 		spaceNum = 4;
 		break;
+    case 9:
+        rows = 5;
+        spaceNum = 5;
+        break;
 	default:
 		rows = 0;
 		spaceNum = 0;

@@ -3,6 +3,7 @@
 #include "Maze.h"
 #include "Reverse.h"
 #include "Mirror.h"
+#include "Weird.h"
 #include <iostream>
 #include <conio.h>
 
@@ -28,9 +29,12 @@ int GameManager::input_level() {
 			while ((ch = getchar()) != '\n' && ch != EOF);
 		}
 
-		// 문자열이 정수형 숫자 하나로만 이루어졌는지 확인
-		if (strlen(buf) == 1 && buf[0] >= '1' && buf[0] <= '8') {
-			i = buf[0] - '0'; // 문자 → 정수로 변환
+        //&& buf[0] >= '1' && buf[0] <= '9'
+
+		// 문자열이 정수형 숫자 하나로만 이루어졌는지 확인 - test: enable level 10
+		if (strlen(buf) <= 2 ) {
+			//i = buf[0] - '0'; // 문자 → 정수로 변환
+            i = atoi(buf); // 문자열을 정수로 변환
 			break;
 		}
 		else {
@@ -66,9 +70,13 @@ void GameManager::run() {
 			else if (manager_level == 2 || manager_level == 5 || manager_level == 8) {
 				game = new Maze();
 			}
-			else {
-				game = new Normal();
+			else if (manager_level == 9) {
+                game = new Weird();
 			}
+            else {
+                std::cout << "Invalid level!" << std::endl;
+                return; // 잘못된 레벨인 경우 프로그램 종료
+            }
 
 			game->setLevel(manager_level); // GameManager의 레벨을 새로 생성된 Game 객체에 전달
 
