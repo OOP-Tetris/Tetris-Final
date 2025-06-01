@@ -243,6 +243,7 @@ int Maze::move_block()
         comboEvent();
         printer->show_combo();
         printer->show_total_block(total_block, level);
+        printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
     }
 		int is_over = merge_block();
 
