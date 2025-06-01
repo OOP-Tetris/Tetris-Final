@@ -405,4 +405,27 @@ void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
     }
 }
 
+void Printer::show_combo()
+{
+    SetColor(BLUE);
+    gotoxy(15, 8);
+    printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+    gotoxy(15, 9);
+    printf("┃**************************┃");
+    gotoxy(15, 10);
+    printf("┃*        COMBO EVENT       *┃");
+    gotoxy(15, 11);
+    printf("┃**************************┃");
+    gotoxy(15, 12);
+    printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+   
+    fflush(stdin);
+    Sleep(500);
+   
+    (void)_getche();
+    system("cls");
+    return;
+}
+
+
 
