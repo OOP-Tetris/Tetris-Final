@@ -16,6 +16,7 @@
 
 class Game {
 protected:
+    bool check_FirstComb = true;
     int level;
     int score;
     int lines;

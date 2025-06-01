@@ -270,14 +270,18 @@ int Reverse::move_block() {
 		curr_block = next_block;
 		//만약 클리어한 라인의 수가 깨야되는 줄의 반이라면 콤보가 발동해 다음블록은 무조건 일자 블록이 나온다
 		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
-			next_block = new Block(stages->get_stick_rate(level), true);
-             printer->show_combo();
-             printer->show_total_block(total_block, level);
-            printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-		}
-		else {
-			next_block = new Block(stages->get_stick_rate(level));
-		}
+        next_block = new Block(stages->get_stick_rate(level), true);
+            if (check_FirstComb) {
+                printer->show_combo();
+                printer->show_total_block(total_block, level);
+                printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+                check_FirstComb = false;
+            }
+        }
+        else {
+            check_FirstComb = true;
+            next_block = new Block(stages->get_stick_rate(level));
+        }
 		
 		printer->show_next_block(*next_block, level);
 		curr_block->start_Reversed();
