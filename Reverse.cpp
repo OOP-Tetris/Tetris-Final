@@ -1,7 +1,7 @@
 ﻿#include "Reverse.h"
 #include<iostream>
 
-Reverse::Reverse()
+Reverse::Reverse() : Game()  //생성자
 {
     //난수를 발생 시킴
     srand(unsigned(time(0)));
@@ -261,6 +261,10 @@ int Reverse::move_block() {
 		if (is_over == 3) {
 			return 3;
 		}
+
+        if (is_over == 4) {
+            return 4;
+        }
 
 		delete curr_block;
 		curr_block = next_block;
