@@ -34,6 +34,8 @@ class Printer {
         int show_total_block(char total_block[21][14], int level);
         int show_gamestat(int level, int score, int lines_left);
         int show_clear_screen(int score);
+        void show_combo();
+
         int show_gameover();
         void show_ghostBlock(Block& b);
         void erase_ghostBlock(Block& b, char total_block[21][14]);
