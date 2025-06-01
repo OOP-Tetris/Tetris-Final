@@ -52,6 +52,9 @@ void Printer::show_keys() {
 		printf("┃ RIGHT: Move Right          ┃");
 		Sleep(10);
 		gotoxy(10, 13);
+        printf("┃ K    : Keep Block          ┃");
+        Sleep(10);
+        gotoxy(10, 14);
 		printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 		gotoxy(10, 3);
 		printf("Select Start level[1-8]:       \b\b\b\b\b\b\b");
