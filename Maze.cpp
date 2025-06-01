@@ -80,7 +80,16 @@ bool Maze::isCleared() {
     return clearedRows == rows;
 }
 
+void Maze::comboEvent()
+{
+    lines++;
+    for (int i = 0; i < 13; i++) {
+       total_block[19][i] = 1;
+    }
 
+    printer->show_total_block(total_block, level);
+    Sleep(100);
+}
 void Maze::init() {
 	for (int i = 0; i < 20; i++)
 		for (int j = 0; j < 14; j++)
@@ -229,7 +238,12 @@ int Maze::move_block()
 
 			return 1;
 		}
-
+        //새로 추가된 내용 지금 스테이지 목표 줄의 절반이 깨지는 경우에는 가장 아래에 있는 줄 한개를 삭제시킨다
+        if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
+        comboEvent();
+        printer->show_combo();
+        printer->show_total_block(total_block, level);
+    }
 		int is_over = merge_block();
 
 		if (is_over == 3) {
@@ -247,12 +261,8 @@ int Maze::move_block()
 		if (is_over == 4) {
 			return 4;
 		}
-		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
-			next_block = new Block(stages->get_stick_rate(level), true);
-		}else{
-            next_block = new Block(stages->get_stick_rate(level));    
-        }
-		
+	
+		next_block = new Block(stages->get_stick_rate(level));    
 		printer->show_next_block(*next_block, level);
 		curr_block->start();
 		printer->show_next_block(*next_block, level);
