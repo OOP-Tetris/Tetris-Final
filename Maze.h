@@ -20,6 +20,9 @@ public:
 	int strike_check() override;
 	void block_start(Block* b) override;
     int check_full_line() override;
+
+    //미로 관련 이벤트 처리하는 함수
+     void comboEvent();
 };
 
 
