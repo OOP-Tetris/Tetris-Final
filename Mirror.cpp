@@ -57,6 +57,11 @@ int Mirror::operate_key(int keytemp) {
         while (_kbhit()) (void)_getch();
     }
 
+    if (keytemp == KEEP) {
+        keep();
+        return 0;
+    }
+
     if (keytemp == 32) {
         while (is_gameover == 0) {
             is_gameover = move_block();

@@ -162,7 +162,7 @@ int Printer::show_keeped_block(Block& block, int level)
     SetColor((level%6)+1);
     for (i = 1; i < 7; i++)
     {
-        gotoxy(45, i);
+        gotoxy(47, i);
         for (j = 0; j < 8; j++)
         {
             if (i == 1 || i == 6 || j == 0 || j == 4)
@@ -174,7 +174,7 @@ int Printer::show_keeped_block(Block& block, int level)
     }
 
     block.rotate(0);
-    block.movetoxy(21, 1);
+    block.movetoxy(22, 1);
 
     show_cur_block(block);
 
