@@ -55,7 +55,7 @@ void GameManager::run() {
 		system("cls");
 
 		while (manager_level < 10) { // GameManager의 레벨이 9 미만일 때만 루프
-            Game* game = nullptr;
+			Game* game = nullptr;
 
 			if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
 				game = new Reverse();
@@ -94,7 +94,7 @@ void GameManager::run() {
 			}
 			system("cls");
 
-            if (game != nullptr) delete game;
+
 		}
 	}
 	

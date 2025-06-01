@@ -3,7 +3,6 @@
 
 class Normal : public Game {
 public:
-    Normal();
     void init() override;
     int move_block() override;
     int strike_check() override;

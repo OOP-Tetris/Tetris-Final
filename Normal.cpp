@@ -1,8 +1,5 @@
 ﻿#include "Normal.h"
 
-Normal::Normal() : Game() {
-}
-
 void Normal::init() {
     for (int i = 0; i < 20; i++)
         for (int j = 0; j < 14; j++)
@@ -78,11 +75,6 @@ int Normal::move_block()
 		if (is_over == 3) {
 			return 3;
 		}
-
-        if (is_over == 4) {
-            return 4;
-        }
-
 		delete curr_block;
 		curr_block = next_block;
 		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
