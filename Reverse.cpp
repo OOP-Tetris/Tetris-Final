@@ -273,6 +273,7 @@ int Reverse::move_block() {
 			next_block = new Block(stages->get_stick_rate(level), true);
              printer->show_combo();
              printer->show_total_block(total_block, level);
+            printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
 		}
 		else {
 			next_block = new Block(stages->get_stick_rate(level));
