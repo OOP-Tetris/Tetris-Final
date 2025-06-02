@@ -139,6 +139,7 @@
     <ClInclude Include="Reverse.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="Stages.h" />
+    <ClInclude Include="Weird.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Reverse.cpp" />
     <ClCompile Include="Stages.cpp" />
     <ClCompile Include="TestMain.cpp" />
+    <ClCompile Include="Weird.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

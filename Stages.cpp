@@ -28,9 +28,9 @@ Stages::Stages() {
 	stage_data[8].speed=6;
 	stage_data[8].stick_rate=12;
 	stage_data[8].clear_line=2;
-	stage_data[9].speed=4;
+    stage_data[9].speed = 20;         // for testing purposes, speed is set to 20
 	stage_data[9].stick_rate=11;
-	stage_data[9].clear_line=4;
+	stage_data[9].clear_line=2;
 }
 
 int Stages::get_clear_line(int level) {

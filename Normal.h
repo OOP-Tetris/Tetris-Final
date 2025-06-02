@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Game.h"
 
-class Normal : public Game {
+class Normal : public virtual Game {
 public:
     void init() override;
     int move_block() override;
