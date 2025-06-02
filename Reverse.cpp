@@ -108,7 +108,7 @@ int Reverse::check_full_line()
                     total_block[k ][j] = total_block[k + 1 ][j];
             }
             for (j = 1; j < 13; j++)
-                total_block[20][j] = 0;
+                total_block[19][j] = 0;
             score += 100 + (level * 10) + (rand() % 10);
             printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
             i--;
@@ -244,17 +244,10 @@ int Reverse::move_block() {
 		//블록이 충돌한 경우에 대해서 게임 화면을 벗어나는 지를 확인하는 함수로 게임화면을 벗어나면 true를 반환하며 이 경우 게임 클리어 실패로 판별되어 false가 반환됩니다
         //추가된 내용으로 블록이 모든 블록을 나타내는 경계에 들어가기 전 좌우 충돌하는 경우에는 게임 종료를 시키지 않기 위해 strike함수의 반환값을 조정했고 이를 통해서 detOverflow값을 변경해서 게임 종료 여부를 변경하게 했습니다
 		if (check_overflow() && detOverflow) {
-            /*printer->SetColor(3);
-            std::cout << curr_block->get_x() << " , " << curr_block->get_y() << std::endl;
-            system("pause");*/
+            Sleep(100);
             return 1;
 		}
-		if (curr_block->get_y() >= 20 )	//게임오버 조건 21이 아니라 20이어야 합니다
-		{
-			Sleep(100);
-			return 1;
-		}
-	
+		
 
 		int is_over = merge_block();
 
