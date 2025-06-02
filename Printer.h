@@ -39,4 +39,12 @@ class Printer {
         int show_gameover();
         void show_ghostBlock(Block& b);
         void erase_ghostBlock(Block& b, char total_block[21][14]);
+
+
+
+        void first_story();
+        void mirror_stage();
+        void reverse_stage();
+        void miro_stage();
+        void ending();
 };

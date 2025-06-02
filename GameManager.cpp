@@ -96,6 +96,8 @@ void GameManager::run() {
 			}
 			else if (!game_cleared_result && final_game_level == 10) {
 				printer.show_clear_screen(game->getScore());
+                system("cls");
+                printer.show_logo();
 			}
 			else {
 				break;
