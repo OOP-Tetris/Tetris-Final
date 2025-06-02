@@ -111,9 +111,9 @@ int Reverse::check_full_line()
                 total_block[20][j] = 0;
             score += 100 + (level * 10) + (rand() % 10);
             printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-            i++;
+            i--;
 
-            return 5;
+            //return 5;
         }
 
     }
