@@ -60,6 +60,11 @@ void GameManager::run() {
 		int manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
 		system("cls");
 
+        if (manager_level == -1) {
+            // game stopped
+            break;
+        }
+
 		while (manager_level < 10) { // GameManager의 레벨이 9 미만일 때만 루프
 			Game* game = nullptr;
 
@@ -90,7 +95,7 @@ void GameManager::run() {
 			int final_game_level = game->getLevel();
 
 
-
+            /*
 			// Game 객체가 클리어되었고, Game 객체 내부 레벨이 GameManager의 레벨보다 높다면
 			// (즉, 레벨업이 발생했다면) GameManager의 레벨도 업데이트합니다.
 			if (game_cleared_result && final_game_level > manager_level) { // 클리어되었는지 확인
@@ -104,6 +109,23 @@ void GameManager::run() {
 			else {
 				break;
 			}
+            */
+
+            if (game_cleared_result && final_game_level > manager_level) {
+                manager_level = final_game_level;
+                if (manager_level == 10) {
+                    printer.show_clear_screen(game->getScore());
+                    Sleep(3000);
+                    printf("▶ 아무 키나 누르면 메인 화면으로 돌아갑니다...");
+                    (void)_getch();
+                    system("cls");
+                    break;
+                }
+            }
+            else {
+                break;
+            }
+
 			system("cls");
 
 

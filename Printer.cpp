@@ -373,7 +373,7 @@ int Printer::show_clear_screen(int score) {
 	printf("          점수: %10d점         ", score);
 	gotoxy(10, 14);
 	SetColor(GRAY);
-	Sleep(1000); // 3초 대기
+	Sleep(3000); // 3초 대기
 	system("cls");
 	return 1;
 }
@@ -381,6 +381,7 @@ int Printer::show_clear_screen(int score) {
 //게임이 끝났을때 게임 오버창을 띄우는 함수
 int Printer::show_gameover()
 {
+    system("cls");
     SetColor(RED);
     gotoxy(10, 5);
     printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
