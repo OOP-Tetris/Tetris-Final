@@ -191,8 +191,8 @@ int Printer::show_logo()
 	system("cls");
 	int i=0,j;
 	SetColor(WHITE);
-	gotoxy(13,3);
-	printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+	gotoxy(42,3);
+	/*printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
 	Sleep(100);
 	gotoxy(13,4);
 	printf("┃ ◆◆◆   ◆◆◆  ◆◆◆    ◆◆     ◆   ◆◆◆ ┃");
@@ -213,7 +213,48 @@ int Printer::show_logo()
 	printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
 	gotoxy(20,20);
-	printf("Please Press Any Key~!");
+	printf("Please Press Any Key~!");*/
+    printf("██╗    ██╗███████╗██╗██████╗ ██████╗");
+    Sleep(100);
+    gotoxy(42, 4);
+    printf("██║    ██║██╔════╝██║██╔══██╗██╔══██╗");
+    Sleep(100);
+    gotoxy(42, 5);
+    printf("██║ █╗ ██║█████╗  ██║██████╔╝██║  ██║");
+    Sleep(100);
+    gotoxy(42, 6);
+    printf("██║███╗██║██╔══╝  ██║██╔══██╗██║  ██║");
+    Sleep(100);
+    gotoxy(42, 7);
+    printf("╚███╔███╔╝███████╗██║██║  ██║██████╔╝");
+    Sleep(100);
+    gotoxy(42, 8);
+    printf(" ╚══╝╚══╝ ╚══════╝╚═╝╚═╝  ╚═╝╚═════╝");
+    Sleep(100);
+
+    gotoxy(22, 10);
+    printf("██████╗ ██╗      ██████╗  ██████╗██╗  ██╗    ██╗      █████╗ ███╗   ██╗██████╗");
+    Sleep(100);
+    gotoxy(22, 11);
+    printf("██╔══██╗██║     ██╔═══██╗██╔════╝██║ ██╔╝    ██║     ██╔══██╗████╗  ██║██╔══██╗");
+    Sleep(100);
+    gotoxy(22, 12);
+    printf("██████╔╝██║     ██║   ██║██║     █████╔╝     ██║     ███████║██╔██╗ ██║██║  ██║");
+    Sleep(100);
+    gotoxy(22, 13);
+    printf("██╔══██╗██║     ██║   ██║██║     ██╔═██╗     ██║     ██╔══██║██║╚██╗██║██║  ██║");
+    Sleep(100);
+    gotoxy(22, 14);
+    printf("██████╔╝███████╗╚██████╔╝╚██████╗██║  ██╗    ███████╗██║  ██║██║ ╚████║██████╔╝");
+    Sleep(100);
+    gotoxy(22, 15);
+    printf("╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝");
+    Sleep(100);
+    gotoxy(42, 17);
+    printf("░▒▓█ W E I R D   B L O C K   L A N D █▓▒░");
+
+    gotoxy(50, 25);
+    printf("Please Press Any Key~!");
 
 	while(true) {
 		if(i%40==0)
@@ -223,25 +264,25 @@ int Printer::show_logo()
 			for(j=0;j<5;j++)
 			{
 				//여기서 18의 값을 조정해서 첫번째 블럭도 다 지워지도록 조정
-				gotoxy(6,14+j);
-				printf("                                                             ");
+				gotoxy(17,19+j);
+				printf("                                                                 ");
 				
 				
 			}
 
-			Block* block = new Block(rand() % 7, rand() % 4, 6, 14);
+			Block* block = new Block(rand() % 7, rand() % 4, 19, 19);
 			show_cur_block(*block);
 			delete block;
 
-			block = new Block(rand() % 7, rand() % 4, 12, 14);
+			block = new Block(rand() % 7, rand() % 4, 25, 19);
 			show_cur_block(*block);
 			delete block;
 
-			block = new Block(rand() % 7, rand() % 4, 19, 14);
+			block = new Block(rand() % 7, rand() % 4, 31, 19);
 			show_cur_block(*block);
 			delete block;
 
-			block = new Block(rand() % 7, rand() % 4, 24, 14);
+			block = new Block(rand() % 7, rand() % 4, 37, 19);
 			show_cur_block(*block);
 			delete block;
 		}
@@ -427,5 +468,102 @@ void Printer::show_combo()
     return;
 }
 
+
+void Printer::first_story() {
+
+    //테트리스 화면을 띄운다
+    printf("어라 이게 뭐지...?");
+    printf("테트리스? 이거 엄청 오래된 게임 아니야? 누가 내 컴퓨터로...");
+    printf("과제도 하기 싫은데 한 번 해볼까..?");
+
+    system("cls");
+
+    Sleep(2000);
+
+    printf("어라..여긴 어디지...");
+    printf("분명 마지막에 테트리스 게임을 하고 있던 것 같은데....");
+    printf("(쿵)");
+    printf("테트리스 블럭..? 이게 왜 여기에..??");
+
+    Sleep(1000);
+
+    printf("?? : 너 여기가 처음이구나");
+    printf("여긴 어딘데?");
+    printf("ㅋㅋㅋㅋㅋㅋ여기서 잘 살아남아봐");
+    printf("(갑자기 사라진다)");
+
+    printf("흠...여길 어떻게 나간담...");
+    printf("일단 가보자!");
+
+}
+
+void Printer::mirror_stage() {
+    printf("뭐야 여긴!! 사방이 거울이잖아!!");
+    printf("이래서 길을 찾을 수 있나...");
+    printf("?? : 반가워ㅎㅎ");
+    printf("누구세요? 여기서 어떻게 나가죠?");
+    printf("흠...너 아무것도 모르는 구나");
+    printf("여긴 거울 나라야~ 어느 방향인지 헷갈리게 하는 아주 재밌는 곳이지");
+    printf("조금 도와주자면 뒤죽박죽인 방향을 조심해~");
+    printf("한번 잘 살아남아봐");
+    printf("방향이 뒤죽박죽이라고...?");
+
+    system("cls");
+
+    printf("<system>");
+    printf("방향키의 조작이 마음대로 바뀐다??");
+    printf("당신은 거울나라에 도착했습니다!");
+    printf("테트리스의 방향키가 계속해서 바뀌니 조심하세요!");
+}
+
+void Printer::reverse_stage() {
+    printf("힘들게 거울 나라를 빠져나왔더니 여긴 또 어디야 --");
+    printf("분명 탈출구가 있다고 했는데!");
+    printf("모두가 거꾸로 매달려 있네... 머리 안아픈가");
+    printf("저기요 여기서 어떻게 나가요?");
+    printf("뭐야 넌 여기가 처음이야? 이상한 애네");
+    printf("흠...불쌍해보이니 도와주자면 여긴 모든것이 거꾸로야");
+    printf("거꾸로인게 어쨌단 거지...");
+
+
+    system("cls");
+
+    printf("<system>");
+    printf("세상이 거꾸로 뒤집혔다!");
+    printf("당신은 거꾸로나라에 도착했습니다!");
+    printf("테트리스의 맵이 거꾸로 뒤집히니 조심하세요!");
+}
+
+void Printer::miro_stage() {
+    printf("아니 힘들게 거꾸로 나라까지 지나왔는데 여긴 또 뭐야");
+    printf("슬슬 짜증이 나네...심지어 여기 사방에 큰 벽이 있잖아!!!");
+    printf("어라 거기 뭐 좀 물어보자");
+    printf("내 휴식을 방해하면서 거기라니!! 뭐야 이 이상한 앤");
+    printf("아니..여기서 길을 잃었는데 어떻게 나가지?");
+    printf("ㅋㅋㅋㅋㅋ당연하지 여긴 미로니까");
+    printf("미로..?");
+
+
+    system("cls");
+
+    printf("<system>");
+    printf("당신은 미로에 갇혔다!");
+    printf("당신은 미로나라에 도착했습니다!");
+    printf("테트리스에 미로 장애물이 나타나니 미로 끝에 잘 도달해보세요!");
+
+}
+
+void Printer::ending() {
+    printf("와...쉽지 않았다 진짜...드디어 집에 갈수 있나....");
+    system("cls");
+    printf("?? : 잘가...간만에 즐거웠다..");
+    system("cls");
+    printf("(졸린 눈을 뜨며)");
+    printf("내가 잠들었었나...");
+    printf("손에 이 블럭은 뭐지?");
+    printf("에잇 나도 몰라 밥먹으러 가야겠다");
+    system("cls");
+    //테트리스 맵을 한번더 보여줌
+}
 
 
