@@ -35,7 +35,7 @@ bool Reverse::check_overflow()
 				int x = curr_block->get_x() + j;
 				int y = curr_block->get_y() + i;
 				//충돌 발생한 블록의 일부가 게임 화면의 영역을 벗어나면 게임 종료조건을 충족하기 때문에 true를 반환합니다
-				if (y >= 21) {
+				if (y >= 20) {
 					return true;
 				}
 			}
