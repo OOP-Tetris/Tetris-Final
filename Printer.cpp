@@ -413,7 +413,7 @@ void Printer::show_combo()
     gotoxy(15, 9);
     printf("┃**************************┃");
     gotoxy(15, 10);
-    printf("┃*        COMBO EVENT       *┃");
+    printf("┃*        COMBO EVENT     *┃");
     gotoxy(15, 11);
     printf("┃**************************┃");
     gotoxy(15, 12);

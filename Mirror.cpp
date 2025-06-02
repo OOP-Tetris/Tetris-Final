@@ -92,6 +92,13 @@ int Mirror::random_key() {
     return 0;
 }
 
+void Mirror::reset_key() {
+    up = KEY_UP;
+    down = KEY_DOWN;
+    left = KEY_LEFT;
+    right = KEY_RIGHT;
+}
+
 int Mirror::move_block()
 {
 	printer->erase_cur_block(*curr_block);

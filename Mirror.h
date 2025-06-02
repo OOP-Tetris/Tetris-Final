@@ -2,9 +2,9 @@
 #include "Game.h"
 #include "Normal.h"
 
-class Mirror : public Normal
+class Mirror : public virtual Normal
 {
-private:
+protected:
     int up;
     int down;
     int left;
@@ -14,6 +14,7 @@ public:
     ~Mirror() override;
     int operate_key(int tempkey) override;
     int random_key();
+    void reset_key();
     int move_block() override;
     bool isCleared() override;
 };
