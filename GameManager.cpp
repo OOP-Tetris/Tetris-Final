@@ -50,6 +50,8 @@ void GameManager::run() {
 	printer.hideCursor();
 	printer.show_logo();
 	std::cout << "\nPress Enter to start...\n";
+    system("cls");
+    printer.first_story();
 	while (1) {
 		int manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
 		system("cls");

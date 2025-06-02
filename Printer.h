@@ -40,8 +40,8 @@ class Printer {
         void show_ghostBlock(Block& b);
         void erase_ghostBlock(Block& b, char total_block[21][14]);
 
-
-
+        void draw_dialog_frame();
+        void dialog_line(const char* speaker, const char* lines[], int lineCount);
         void first_story();
         void mirror_stage();
         void reverse_stage();
