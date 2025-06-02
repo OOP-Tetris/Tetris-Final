@@ -323,7 +323,7 @@ int Printer::show_total_block(char total_block[21][14], int level) {
 			
 		}
 	}
-	if (level == 0 || level == 3 || level == 6) {
+	if (level == 0 || level == 3 || level == 6 || level == 9) {
 		SetColor((level % 6) + 1);
 		for (j = 0; j < 14; j++) {
 			gotoxy((j * 2) + ab_x, ab_y);

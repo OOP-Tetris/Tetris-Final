@@ -115,7 +115,6 @@ void GameManager::run() {
                 manager_level = final_game_level;
                 if (manager_level == 10) {
                     printer.show_clear_screen(game->getScore());
-                    Sleep(3000);
                     printf("▶ 아무 키나 누르면 메인 화면으로 돌아갑니다...");
                     (void)_getch();
                     system("cls");

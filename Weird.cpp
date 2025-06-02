@@ -54,7 +54,7 @@ void Weird::makeMaze(char total_block[21][14])
     rows = 5;
     spaceNum = 5;
 
-    int rowStart = 0;
+    int rowStart = 1;
     for (int i = 0; i < rows; i++) {
         vector<int> spaceIdx;
         for (int j = 1; j < 13; j++) {
