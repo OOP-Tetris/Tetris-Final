@@ -69,15 +69,20 @@ void GameManager::run() {
 			Game* game = nullptr;
 
 			if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
-				game = new Reverse(score);
+                if (manager_level == 0) { printer.reverse_stage(); }
+                if (manager_level == 3) { printer.repeat_level(); }
+                game = new Reverse(score);
 			}
 			else if (manager_level == 1 || manager_level == 4 || manager_level == 7) {
-				game = new Mirror(score);
+                if (manager_level == 1) { printer.mirror_stage(); }
+                game = new Mirror(score);
 			}
 			else if (manager_level == 2 || manager_level == 5 || manager_level == 8) {
-				game = new Maze(score);
+                if (manager_level == 2) { printer.miro_stage(); }
+                game = new Maze(score);
 			}
 			else if (manager_level == 9) {
+                printer.weird_stage();
                 game = new Weird(score);
 			}
             else {
