@@ -577,7 +577,7 @@ void Printer::first_story() {
     dialog_line("??", lines6, 2);
 
     const char* lines7[] = { " ","(갑자기 사라진다)" };
-    dialog_line("나", lines7, 2);
+    dialog_line("??", lines7, 2);
 
     const char* lines8[] = {
         " ",
@@ -590,72 +590,212 @@ void Printer::first_story() {
 }
 
 
+void Printer::reverse_stage() {
+    system("cls");
+    hideCursor();
 
-void Printer::mirror_stage() {
-    printf("뭐야 여긴!! 사방이 거울이잖아!!");
-    printf("이래서 길을 찾을 수 있나...");
-    printf("?? : 반가워ㅎㅎ");
-    printf("누구세요? 여기서 어떻게 나가죠?");
-    printf("흠...너 아무것도 모르는 구나");
-    printf("여긴 거울 나라야~ 어느 방향인지 헷갈리게 하는 아주 재밌는 곳이지");
-    printf("조금 도와주자면 뒤죽박죽인 방향을 조심해~");
-    printf("한번 잘 살아남아봐");
-    printf("방향이 뒤죽박죽이라고...?");
+    draw_dialog_frame();
+
+    const char* lines1[] = { " ", "어디야 여긴...? 뭔가 다들 거꾸로 매달려 있는데...?", "이상한데..." };
+    dialog_line("나", lines1, 3);
+
+    const char* lines2[] = { " ", "저기요! 혹시 여기서 나가는 길 아세요?" };
+    dialog_line("나", lines2, 2);
+
+    const char* lines3[] = { " ", "뭐야 넌 여기가 처음이야? 이상한 애네" };
+    dialog_line("??", lines3, 2);
+
+    const char* lines4[] = { " ", "불쌍해보이니 알려주자면 여긴 모든 게 거꾸로인 곳이야" };
+    dialog_line("??", lines4, 2);
+
+    const char* lines5[] = { " ", "거꾸로인게 어쨌단 거지..." };
+    dialog_line("나", lines5, 2);
+
+    const char* systemLines[] = {
+        "세상이 거꾸로 뒤집혔다!",
+        "당신은 거꾸로나라에 도착했습니다!",
+        "테트리스의 맵이 거꾸로 뒤집히니 조심하세요!"
+    };
+    dialog_line("<system>", systemLines, 3);
 
     system("cls");
-
-    printf("<system>");
-    printf("방향키의 조작이 마음대로 바뀐다??");
-    printf("당신은 거울나라에 도착했습니다!");
-    printf("테트리스의 방향키가 계속해서 바뀌니 조심하세요!");
 }
 
-void Printer::reverse_stage() {
-    printf("힘들게 거울 나라를 빠져나왔더니 여긴 또 어디야 --");
-    printf("분명 탈출구가 있다고 했는데!");
-    printf("모두가 거꾸로 매달려 있네... 머리 안아픈가");
-    printf("저기요 여기서 어떻게 나가요?");
-    printf("뭐야 넌 여기가 처음이야? 이상한 애네");
-    printf("흠...불쌍해보이니 도와주자면 여긴 모든것이 거꾸로야");
-    printf("거꾸로인게 어쨌단 거지...");
+void Printer::mirror_stage() {
+    system("cls");
+    hideCursor();
 
+    draw_dialog_frame();
+
+    const char* lines1[] = { " ", "거꾸로 나라는 간신히 빠져나왔는데...", "여긴 또 뭐야? 사방이 거울이잖아?!" };
+    dialog_line("나", lines1, 3);
+
+    const char* lines2[] = { " ", "이래서 길을 찾을 수 있나...", "(웅성웅성)" };
+    dialog_line("나", lines2, 3);
+
+    const char* lines3[] = { " ", "반가워~ 여기 처음이지?" };
+    dialog_line("??", lines3, 2);
+
+    const char* lines4[] = { " ", "아, 또 누구야... 도대체 여긴 어디예요?" };
+    dialog_line("나", lines4, 2);
+
+    const char* lines5[] = { " ", "여긴 거울 나라야~ 방향이 계속 바뀌는 아주 재밌는 곳이지" };
+    dialog_line("??", lines5, 2);
+
+    const char* lines6[] = { " ", "뒤죽박죽인 방향을 조심해~ 한 번 잘 살아남아봐!" };
+    dialog_line("??", lines6, 2);
+
+    const char* lines7[] = { " ", "방향이... 뒤죽박죽...? 또 뭔데 그건..." };
+    dialog_line("나", lines7, 2);
+
+    const char* systemLines[] = {
+        "방향키의 조작이 마음대로 바뀐다??",
+        "당신은 거울나라에 도착했습니다!",
+        "테트리스의 방향키가 계속해서 바뀌니 조심하세요!"
+    };
+    dialog_line("<system>", systemLines, 3);
 
     system("cls");
-
-    printf("<system>");
-    printf("세상이 거꾸로 뒤집혔다!");
-    printf("당신은 거꾸로나라에 도착했습니다!");
-    printf("테트리스의 맵이 거꾸로 뒤집히니 조심하세요!");
 }
 
 void Printer::miro_stage() {
-    printf("아니 힘들게 거꾸로 나라까지 지나왔는데 여긴 또 뭐야");
-    printf("슬슬 짜증이 나네...심지어 여기 사방에 큰 벽이 있잖아!!!");
-    printf("어라 거기 뭐 좀 물어보자");
-    printf("내 휴식을 방해하면서 거기라니!! 뭐야 이 이상한 앤");
-    printf("아니..여기서 길을 잃었는데 어떻게 나가지?");
-    printf("ㅋㅋㅋㅋㅋ당연하지 여긴 미로니까");
-    printf("미로..?");
+    system("cls");
+    hideCursor();
 
+    draw_dialog_frame();
+
+    const char* lines1[] = { " ", "아니 힘들게 거울 나라까지 지나왔는데 여긴 또 뭐야", "슬슬 짜증이 나네...심지어 여기 사방에 큰 벽이 있잖아!!!" };
+    dialog_line("나", lines1, 3);
+
+    const char* lines2[] = { " ", "어라 거기! 뭐 좀 물어보자!" };
+    dialog_line("나", lines2, 2);
+
+    const char* lines3[] = { " ", "내 휴식을 방해하면서 거기라니!! 뭐야 이 이상한 앤" };
+    dialog_line("??", lines3, 2);
+
+    const char* lines4[] = { " ", "아니..여기서 길을 잃었는데 어떻게 나가지?" };
+    dialog_line("나", lines4, 2);
+
+    const char* lines5[] = { " ", "ㅋㅋㅋㅋㅋ당연하지 여긴 미로니까" };
+    dialog_line("??", lines5, 2);
+
+    const char* lines6[] = { " ", "미로..?" };
+    dialog_line("나", lines6, 2);
+
+    const char* systemLines[] = {
+        "당신은 미로에 갇혔다!",
+        "당신은 미로나라에 도착했습니다!",
+        "테트리스에 미로 장애물이 나타나니 미로 끝에 잘 도달해보세요!"
+    };
+    dialog_line("<system>", systemLines, 3);
 
     system("cls");
+}
 
-    printf("<system>");
-    printf("당신은 미로에 갇혔다!");
-    printf("당신은 미로나라에 도착했습니다!");
-    printf("테트리스에 미로 장애물이 나타나니 미로 끝에 잘 도달해보세요!");
+void Printer::repeat_level() {
+    system("cls");
+    hideCursor();
+    draw_dialog_frame();
 
+    const char* lines1[] = { " ", "휴... 드디어 탈출이네!", "이제 정말 나갈 수 있는 건가?" };
+    dialog_line("나", lines1, 3);
+
+    const char* lines2[] = { " ", "큭큭... 그럼 재미없지!" };
+    dialog_line("??", lines2, 2);
+
+    const char* lines3[] = { " ", "더 빠른 속도로 즐기게 해주지!", "한 번 탈출해 봐!" };
+    dialog_line("??", lines3, 3);
+
+    const char* lines4[] = { " ", "...뭐라고?" };
+    dialog_line("나", lines4, 2);
+
+    const char* systemLines[] = {
+        "블럭이 더 빠른 속도로 추락한다!",
+        "여태 거쳐온 나라를 두 번씩 더 탈출하자!"
+    };
+    dialog_line("<system>", systemLines, 2);
+
+    system("cls");
+}
+
+void Printer::weird_stage() {
+    system("cls");
+    hideCursor();
+    draw_dialog_frame();
+
+    const char* lines1[] = {
+        " ",
+        "이제 진짜 끝났겠지...?",
+        "거꾸로도, 거울도, 미로도 다 지나왔는데..."
+    };
+    dialog_line("나", lines1, 3);
+
+    const char* lines2[] = {
+        " ",
+        "어디선가 이상한 기운이 느껴진다...",
+        "뭐야... 방금 지나온 곳이 한꺼번에 섞인 것 같잖아?!"
+    };
+    dialog_line("나", lines2, 3);
+
+    const char* lines3[] = {
+        " ",
+        "후후후... 마지막 관문에 온 걸 환영해~",
+        "익숙한 듯 낯선, 이 세계에서 넌 헤맬 수밖에 없어."
+    };
+    dialog_line("??", lines3, 3);
+
+    const char* lines4[] = {
+        " ",
+        "거꾸로 된 길, 헷갈리는 방향, 끝이 안 보이는 미로...",
+        "그 모든 게 한꺼번에 찾아올 거야~"
+    };
+    dialog_line("??", lines4, 3);
+
+    const char* lines5[] = {
+        " ",
+        "...이걸 다 버티라고?",
+    };
+    dialog_line("나", lines5, 2);
+
+    const char* lines6[] = {
+        " ",
+        "미쳤네 진짜..."
+    };
+    dialog_line("나", lines6, 2);
+
+    const char* systemLines[] = {
+        "당신은 이상한 나라에 도착했습니다!",
+        "거꾸로 나라 + 거울 나라 + 미로 나라",
+        "모든 효과가 동시에 적용됩니다. 끝까지 버텨보세요!"
+    };
+    dialog_line("<system>", systemLines, 3);
+
+    system("cls");
 }
 
 void Printer::ending() {
-    printf("와...쉽지 않았다 진짜...드디어 집에 갈수 있나....");
     system("cls");
-    printf("?? : 잘가...간만에 즐거웠다..");
+    hideCursor();
+
+    draw_dialog_frame();
+
+    const char* lines1[] = { " ", "와... 쉽지 않았다 진짜...", "드디어 집에 갈 수 있나...." };
+    dialog_line("나", lines1, 3);
     system("cls");
-    printf("(졸린 눈을 뜨며)");
-    printf("내가 잠들었었나...");
-    printf("손에 이 블럭은 뭐지?");
-    printf("에잇 나도 몰라 밥먹으러 가야겠다");
+
+    const char* lines2[] = { " ", "잘가... 간만에 즐거웠다.." };
+    dialog_line("??", lines2, 2);
+    system("cls");
+
+    const char* lines3[] = {
+        " ",
+        "(졸린 눈을 뜨며)",
+        "내가 잠들었었나...",
+        "손에 이 블럭은 뭐지?",
+        "에잇 나도 몰라, 밥 먹으러 가야겠다"
+    };
+    dialog_line("나", lines3, 5);
+
     system("cls");
     //테트리스 맵을 한번더 보여줌
 }

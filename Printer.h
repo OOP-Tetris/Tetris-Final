@@ -46,5 +46,7 @@ class Printer {
         void mirror_stage();
         void reverse_stage();
         void miro_stage();
+        void repeat_level();
+        void weird_stage();
         void ending();
 };
