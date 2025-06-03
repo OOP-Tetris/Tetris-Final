@@ -4,6 +4,7 @@
 class Reverse : public virtual Game {
 public:
     Reverse();
+    Reverse(int score);
     void init() override;
     int move_block() override;
     int strike_check() override;

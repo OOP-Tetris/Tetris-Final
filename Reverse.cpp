@@ -7,6 +7,11 @@ Reverse::Reverse()
     srand(unsigned(time(0)));
 }
 
+Reverse::Reverse(int score) : Game(score) {
+    //난수를 발생 시킴
+    srand(unsigned(time(0)));
+}
+
 void Reverse::init() {
     for (int i = 0; i < 20; i++)
         for (int j = 0; j < 14; j++)
@@ -62,13 +67,13 @@ int Reverse::check_full_line()
 
 
 
-            if (stages->get_clear_line(level) <= lines) {
+            if (stages.get_clear_line(level) <= lines) {
                 if (level < 10) {
                     lines = 0;
                     level++;
                     init();
                     cleared = true;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
                     return 4;
                 }
                 //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
@@ -78,22 +83,22 @@ int Reverse::check_full_line()
                     //메인 함수에서 is_game_over이 3일때 break함
                     //이때 화면에서 show_logo()가 잘 보이지 않는다는 것을 확인하여 show_logo() 앞 cls를 통해 지우고 다시 그리도록 함.
 
-                    printer->show_total_block(total_block, level);
+                    printer.show_total_block(total_block, level);
                     lines = 0;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-                    if (printer->show_clear_screen(score)) return 3;
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
+                    if (printer.show_clear_screen(score)) return 3;
                 }
             }
 
-            printer->show_total_block(total_block, level);
-            printer->SetColor(BLUE);
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.show_total_block(total_block, level);
+            printer.SetColor(BLUE);
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("□");
                 Sleep(10);
             }
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("  ");
@@ -110,7 +115,7 @@ int Reverse::check_full_line()
             for (j = 1; j < 13; j++)
                 total_block[19][j] = 0;
             score += 100 + (level * 10) + (rand() % 10);
-            printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+            printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
             i--;
 
             //return 5;
@@ -123,7 +128,7 @@ int Reverse::check_full_line()
 void Reverse::draw_ghostBlock()
 {
     if (prev_ghostBlock != nullptr) {
-        printer->erase_ghostBlock(*prev_ghostBlock, total_block);
+        printer.erase_ghostBlock(*prev_ghostBlock, total_block);
         delete prev_ghostBlock;
         prev_ghostBlock = nullptr;
     }
@@ -154,7 +159,7 @@ void Reverse::draw_ghostBlock()
         return;
     }
 
-    printer->show_ghostBlock(*ghostBlock);
+    printer.show_ghostBlock(*ghostBlock);
     prev_ghostBlock = ghostBlock;
 }
 
@@ -225,7 +230,7 @@ int Reverse::strike_check() {
 }
 
 int Reverse::move_block() {
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	curr_block->move_up();
 
@@ -262,28 +267,28 @@ int Reverse::move_block() {
 		delete curr_block;
 		curr_block = next_block;
 		//만약 클리어한 라인의 수가 깨야되는 줄의 반이라면 콤보가 발동해 다음블록은 무조건 일자 블록이 나온다
-		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
-        next_block = new Block(stages->get_stick_rate(level), true);
+		if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
+        next_block = new Block(stages.get_stick_rate(level), true);
             if (check_FirstComb) {
-                printer->show_combo();
-                printer->show_total_block(total_block, level);
-                printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+                printer.show_combo();
+                printer.show_total_block(total_block, level);
+                printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
                 check_FirstComb = false;
             }
         }
         else {
             check_FirstComb = true;
-            next_block = new Block(stages->get_stick_rate(level));
+            next_block = new Block(stages.get_stick_rate(level));
         }
 		
-		printer->show_next_block(*next_block, level);
+		printer.show_next_block(*next_block, level);
 		curr_block->start_Reversed();
         draw_ghostBlock();
-		printer->show_next_block(*next_block, level);
+		printer.show_next_block(*next_block, level);
 		return 2;
 	
 	}
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	return 0;
 }

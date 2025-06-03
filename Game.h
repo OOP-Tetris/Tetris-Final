@@ -24,8 +24,8 @@ protected:
     int is_gameover = 0;
     char keytemp;
     char total_block[21][14];
-    Stages* stages;
-    Printer* printer;
+    Stages stages;
+    Printer printer;
     Block* curr_block;
     Block* next_block;
     Block* keeped_block;
@@ -33,6 +33,7 @@ protected:
     Block* prev_ghostBlock = nullptr;
 public:
     Game();
+    Game(int score);
     virtual ~Game();
 
     virtual void init() = 0;

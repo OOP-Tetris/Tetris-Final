@@ -11,6 +11,7 @@ protected:
     int right;
 public:
     Mirror();
+    Mirror(int score);
     ~Mirror() override;
     int operate_key(int tempkey) override;
     int random_key();

@@ -13,6 +13,7 @@ protected:
 	int clearedRows; // 깨진 미로 줄 수
 public:
 	Maze();
+    Maze(int score);
 	virtual void makeMaze(char total_block[21][14]);
 	bool isCleared() override;
 	void init() override;

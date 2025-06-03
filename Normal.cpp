@@ -1,4 +1,9 @@
 ﻿#include "Normal.h"
+#include <iostream>
+
+Normal::Normal() : Game() {}
+
+Normal::Normal(int score) : Game(score) {}
 
 void Normal::init() {
     for (int i = 0; i < 20; i++)
@@ -14,7 +19,7 @@ void Normal::block_start(Block* b) {
 
 bool Normal::isCleared()
 {
-    if (stages->get_clear_line(level) <= lines) return true;
+    if (stages.get_clear_line(level) <= lines) return true;
     else return false;
 }
 
@@ -33,7 +38,7 @@ int Normal::strike_check() {
 
 int Normal::move_block()
 {
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
 	if (strike_check() == 1)
@@ -47,18 +52,18 @@ int Normal::move_block()
 		if (curr_block->get_y() < 0)	//°ÔÀÓ¿À¹ö
 		{
 
-			//printer->SetColor(3);
+			//printer.SetColor(3);
 			//printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
 			//system("pause");
 
-			printer->SetColor(DARK_GRAY);
+			printer.SetColor(DARK_GRAY);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					if (curr_block->get_number(i, j) == 1) {
 						int dx = curr_block->get_x() + j;
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
-							printer->gotoxy(dx * 2 + printer->get_x(), dy + printer->get_y());
+							printer.gotoxy(dx * 2 + printer.get_x(), dy + printer.get_y());
 							printf("¡á");
 						}
 					}
@@ -83,16 +88,16 @@ int Normal::move_block()
 		delete curr_block;
 		curr_block = next_block;
 		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
-		if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
-			next_block = new Block(stages->get_stick_rate(level), true);
+		if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
+			next_block = new Block(stages.get_stick_rate(level), true);
 		}
-		next_block = new Block(stages->get_stick_rate(level));
-		printer->show_next_block(*next_block, level);
+		next_block = new Block(stages.get_stick_rate(level));
+		printer.show_next_block(*next_block, level);
 		curr_block->start();
-		printer->show_next_block(*next_block, level);
+		printer.show_next_block(*next_block, level);
 		return 2;
 	}
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	return 0;
 }

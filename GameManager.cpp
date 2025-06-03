@@ -57,7 +57,7 @@ void GameManager::run() {
     system("cls");
     printer.first_story();
 	while (1) {
-		int manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
+		manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
 		system("cls");
 
         if (manager_level == -1) {
@@ -69,16 +69,16 @@ void GameManager::run() {
 			Game* game = nullptr;
 
 			if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
-				game = new Reverse();
+				game = new Reverse(score);
 			}
 			else if (manager_level == 1 || manager_level == 4 || manager_level == 7) {
-				game = new Mirror();
+				game = new Mirror(score);
 			}
 			else if (manager_level == 2 || manager_level == 5 || manager_level == 8) {
-				game = new Maze();
+				game = new Maze(score);
 			}
 			else if (manager_level == 9) {
-                game = new Weird();
+                game = new Weird(score);
 			}
             else {
                 std::cout << "Invalid level!" << std::endl;
@@ -93,6 +93,8 @@ void GameManager::run() {
 			bool game_cleared_result = game->getCleared();
 			// Game 객체 내부에서 실제로 레벨이 몇으로 바뀌었는지 확인 (디버깅용)
 			int final_game_level = game->getLevel();
+
+            score += game->getScore();
 
 
             /*

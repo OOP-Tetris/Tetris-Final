@@ -6,47 +6,44 @@
 using namespace std;
 
 Game::Game() {
-    printer = new Printer();
     score = 0;
     lines = 0;
     level = 0;
     is_gameover = 0;
     cleared = false;
-    stages = new Stages();
 }
+
+Game::Game(int score) : score(score), lines(0), level(0), is_gameover(0), cleared(false) {}
 
 Game::~Game() {
     delete curr_block;
     delete next_block;
-    delete printer;
-    delete stages;
 }
 
 void Game::run() {
-    score = 0;
     lines = 0;
     if (is_gameover == 3) {
-        printer->show_logo();
+        printer.show_logo();
     }
     is_gameover = 0;
     cleared = false;
 
     init();
 
-    curr_block = new Block(stages->get_stick_rate(level));
-    next_block = new Block(stages->get_stick_rate(level));
+    curr_block = new Block(stages.get_stick_rate(level));
+    next_block = new Block(stages.get_stick_rate(level));
     block_start(curr_block);
 
-    printer->show_next_block(*next_block, level);
-    printer->show_total_block(total_block, level);
-    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-    printer->show_cur_block(*curr_block);
+    printer.show_next_block(*next_block, level);
+    printer.show_total_block(total_block, level);
+    printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
+    printer.show_cur_block(*curr_block);
 
     draw_ghostBlock();
     play_loop();
 
     if (is_gameover == 3) {
-        printer->show_logo();
+        printer.show_logo();
     }
     if (is_gameover == 1) {
         score = 0;
@@ -63,23 +60,23 @@ void Game::run() {
 
 void Game::play_loop() {
     for (int i = 1;; i++) {
-        printer->gotoxy(50, 1);
+        printer.gotoxy(50, 1);
         cout << level;
         if (_kbhit()) {
             keytemp = _getche();
             operate_key(keytemp);
         }
 
-        if (i % stages->get_speed(level) == 0) {
+        if (i % stages.get_speed(level) == 0) {
             is_gameover = move_block();
             draw_ghostBlock();
             if (is_gameover != 1 && is_gameover != 3)
-                printer->show_cur_block(*curr_block);
+                printer.show_cur_block(*curr_block);
         }
 
         if (is_gameover == 1) {
-            printer->show_gameover();
-            printer->SetColor(GRAY);
+            printer.show_gameover();
+            printer.SetColor(GRAY);
             is_gameover = 0;
             while (_kbhit()) (void)_getch();
             system("cls");
@@ -95,9 +92,9 @@ void Game::play_loop() {
             return;
         }
 
-        printer->gotoxy(77, 23);
+        printer.gotoxy(77, 23);
         Sleep(15);
-        printer->gotoxy(77, 23);
+        printer.gotoxy(77, 23);
     }
 }
 
@@ -111,26 +108,26 @@ int Game::operate_key(int keytemp) {
                 break;
             case KEY_LEFT:
                 if (curr_block->get_x() > 1) {
-                    printer->erase_cur_block(*curr_block);
+                    printer.erase_cur_block(*curr_block);
                     curr_block->move_left();
                     if (strike_check()) curr_block->move_right();
-                    printer->show_cur_block(*curr_block);
+                    printer.show_cur_block(*curr_block);
                     draw_ghostBlock();
                 }
                 break;
             case KEY_RIGHT:
                 if (curr_block->get_x() < 14) {
-                    printer->erase_cur_block(*curr_block);
+                    printer.erase_cur_block(*curr_block);
                     curr_block->move_right();
                     if (strike_check()) curr_block->move_left();
-                    printer->show_cur_block(*curr_block);
+                    printer.show_cur_block(*curr_block);
                     draw_ghostBlock();
                 }
                 break;
             case KEY_DOWN:
                 is_gameover = move_block();
                 if (is_gameover != 1 && is_gameover != 3)
-                    printer->show_cur_block(*curr_block);
+                    printer.show_cur_block(*curr_block);
                 draw_ghostBlock();
                 break;
         }
@@ -148,7 +145,7 @@ int Game::operate_key(int keytemp) {
         while (is_gameover == 0) {
             is_gameover = move_block();
         }
-        printer->show_cur_block(*curr_block);
+        printer.show_cur_block(*curr_block);
         while (_kbhit()) (void)_getch();
     }
 
@@ -163,9 +160,9 @@ int Game::rotate() {
     if (strike_check() == 0)
     {
         curr_block->rotate(old_angle);
-        printer->erase_cur_block(*curr_block);
+        printer.erase_cur_block(*curr_block);
         curr_block->rotate(new_angle);
-        printer->show_cur_block(*curr_block);
+        printer.show_cur_block(*curr_block);
         return 0;
     }
 
@@ -187,7 +184,7 @@ int Game::merge_block()
     if (is_clear == 3) {
         return 3;
     }
-    printer->show_total_block(total_block, level);
+    printer.show_total_block(total_block, level);
     if (is_clear == 4) {
         return 4;
     }
@@ -222,7 +219,7 @@ int Game::check_full_line()
                     level++;
                     init();
                     cleared = true;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
                     return 4;
                 }
                 //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
@@ -232,22 +229,22 @@ int Game::check_full_line()
                     //메인 함수에서 is_game_over이 3일때 break함
                     //이때 화면에서 show_logo()가 잘 보이지 않는다는 것을 확인하여 show_logo() 앞 cls를 통해 지우고 다시 그리도록 함.
 
-                    printer->show_total_block(total_block, level);
+                    printer.show_total_block(total_block, level);
                     lines = 0;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
-                    if (printer->show_clear_screen(score)) return 3;
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
+                    if (printer.show_clear_screen(score)) return 3;
                 }
             }
 
-            printer->show_total_block(total_block, level);
-            printer->SetColor(BLUE);
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.show_total_block(total_block, level);
+            printer.SetColor(BLUE);
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("□");
                 Sleep(10);
             }
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("  ");
@@ -263,7 +260,7 @@ int Game::check_full_line()
                 total_block[0][j] = 0;
 
             score += 100 + (level * 10) + (rand() % 10);
-            printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+            printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
 
             i--; // 같은 줄을 다시 검사
         }
@@ -283,12 +280,12 @@ void Game::reset_stage() {
 
 // 0: 현재 블럭 저장, 1: 킵했던 블럭 사용
 int Game::keep() {
-    printer->erase_cur_block(*curr_block);
+    printer.erase_cur_block(*curr_block);
 
     if (keeped_block != nullptr) {
         Block* temp = curr_block;
         curr_block = keeped_block;
-        printer->erase_cur_block(*keeped_block);
+        printer.erase_cur_block(*keeped_block);
         keeped_block = nullptr;
 
         delete next_block;
@@ -300,12 +297,12 @@ int Game::keep() {
         keeped_block = curr_block;
         curr_block = next_block;
 
-        next_block = new Block(stages->get_stick_rate(level));
+        next_block = new Block(stages.get_stick_rate(level));
 
-        printer->show_keeped_block(*keeped_block, level);
+        printer.show_keeped_block(*keeped_block, level);
     }
 
-    printer->show_next_block(*next_block, level);
+    printer.show_next_block(*next_block, level);
 
     if (level == 0 || level == 3 || level == 6) {
         curr_block->start_Reversed();
@@ -322,7 +319,7 @@ int Game::keep() {
 void Game::draw_ghostBlock()
 {
     if (prev_ghostBlock != nullptr) {
-        printer->erase_ghostBlock(*prev_ghostBlock, total_block);
+        printer.erase_ghostBlock(*prev_ghostBlock, total_block);
         delete prev_ghostBlock;
         prev_ghostBlock = nullptr;
     }
@@ -336,7 +333,7 @@ void Game::draw_ghostBlock()
         }
     }
 
-    printer->show_ghostBlock(*ghostBlock);
+    printer.show_ghostBlock(*ghostBlock);
     prev_ghostBlock = ghostBlock;
 }
 

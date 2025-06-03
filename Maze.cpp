@@ -9,6 +9,12 @@ Maze::Maze() :Game()
 	srand((unsigned)time(NULL));
 }
 
+Maze::Maze(int score) : Game(score)
+{
+    clearedRows = 0;
+    srand((unsigned)time(NULL));
+}   
+
 void Maze::makeMaze(char total_block[21][14])
 {
 
@@ -91,7 +97,7 @@ void Maze::comboEvent()
        total_block[19][i] = 1;
     }
 
-    printer->show_total_block(total_block, level);
+    printer.show_total_block(total_block, level);
     Sleep(100);
 }
 void Maze::init() {
@@ -101,7 +107,7 @@ void Maze::init() {
 	for (int j = 0; j < 14; j++) total_block[20][j] = 1;
 
 	makeMaze(total_block);  // º¯°æµÈ ÇÔ¼ö È£Ãâ
-	printer->show_total_block(total_block, level);
+	printer.show_total_block(total_block, level);
 
 	lines = 0;
 	cleared = false;
@@ -135,7 +141,7 @@ int Maze::check_full_line()
                     level++;
                     init();
                     cleared = true;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
                     return 4;
                 }
                 //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
@@ -145,22 +151,22 @@ int Maze::check_full_line()
                     //메인 함수에서 is_game_over이 3일때 break함
                     //이때 화면에서 show_logo()가 잘 보이지 않는다는 것을 확인하여 show_logo() 앞 cls를 통해 지우고 다시 그리도록 함.
 
-                    printer->show_total_block(total_block, level);
+                    printer.show_total_block(total_block, level);
                     lines = 0;
-                    printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
-                    if (printer->show_clear_screen(score)) return 3;
+                    printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
+                    if (printer.show_clear_screen(score)) return 3;
                 }
             }
 
-            printer->show_total_block(total_block, level);
-            printer->SetColor(BLUE);
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.show_total_block(total_block, level);
+            printer.SetColor(BLUE);
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("□");
                 Sleep(10);
             }
-            printer->gotoxy(1 * 2 + printer->get_x(), i + printer->get_y());
+            printer.gotoxy(1 * 2 + printer.get_x(), i + printer.get_y());
             for (j = 1; j < 13; j++)
             {
                 printf("  ");
@@ -176,7 +182,7 @@ int Maze::check_full_line()
                 total_block[0][j] = 0;
 
             score += 100 + (level * 10) + (rand() % 10);
-            printer->show_gamestat(level, score, stages->get_clear_line(level) - clearedRows);
+            printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
 
             i--; // 같은 줄을 다시 검사
         }
@@ -206,7 +212,7 @@ int Maze::strike_check() {
 
 int Maze::move_block()
 {
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
 	if (strike_check() == 1)
@@ -220,18 +226,18 @@ int Maze::move_block()
 		if (curr_block->get_y() < 0)	//°ÔÀÓ¿À¹ö
 		{
 
-			//printer->SetColor(3);
+			//printer.SetColor(3);
 			//printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
 			//system("pause");
 
-			printer->SetColor(DARK_GRAY);
+			printer.SetColor(DARK_GRAY);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					if (curr_block->get_number(i, j) == 1) {
 						int dx = curr_block->get_x() + j;
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
-							printer->gotoxy(dx * 2 + printer->get_x(), dy + printer->get_y());
+							printer.gotoxy(dx * 2 + printer.get_x(), dy + printer.get_y());
 							printf("■");
 						}
 					}
@@ -243,12 +249,12 @@ int Maze::move_block()
 			return 1;
 		}
         //새로 추가된 내용 지금 스테이지 목표 줄의 절반이 깨지는 경우에는 가장 아래에 있는 줄 한개를 삭제시킨다
-           if (lines != 0 && stages->get_clear_line(level) / lines == 2) {
+           if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
         comboEvent();
         if (check_FirstComb) {
-            printer->show_combo();
-            printer->show_total_block(total_block, level);
-            printer->show_gamestat(level, score, stages->get_clear_line(level) - lines);
+            printer.show_combo();
+            printer.show_total_block(total_block, level);
+            printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
             check_FirstComb = false;
         }
         else {
@@ -273,13 +279,13 @@ int Maze::move_block()
 			return 4;
 		}
 	
-		next_block = new Block(stages->get_stick_rate(level));    
-		printer->show_next_block(*next_block, level);
+		next_block = new Block(stages.get_stick_rate(level));    
+		printer.show_next_block(*next_block, level);
 		curr_block->start();
-		printer->show_next_block(*next_block, level);
+		printer.show_next_block(*next_block, level);
 		return 2;
 	}
-	printer->erase_cur_block(*curr_block);
+	printer.erase_cur_block(*curr_block);
 
 	return 0;
 }

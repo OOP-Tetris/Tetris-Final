@@ -12,15 +12,15 @@ void Weird::init() {
     Reverse::init();
 
     makeMaze(total_block);
-    printer->show_total_block(total_block, level);
+    printer.show_total_block(total_block, level);
 }
 
 int Weird::move_block() {
     int move = Reverse::move_block();
-    if ( (lines < (stages->get_clear_line(level) / 2)) && (move == 2) ) {
+    if ( (lines < (stages.get_clear_line(level) / 2)) && (move == 2) ) {
         Mirror::random_key();
     }
-    if (lines >= (stages->get_clear_line(level) / 2)) {
+    if (lines >= (stages.get_clear_line(level) / 2)) {
         Mirror::reset_key();
     }
     return move;

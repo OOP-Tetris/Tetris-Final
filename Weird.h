@@ -8,6 +8,7 @@ class Weird :
 {
 public:
     Weird();
+    Weird(int score) : Reverse(score), Maze(score), Mirror(score) {}
     ~Weird() = default;
     void init() override;
     int move_block() override;
