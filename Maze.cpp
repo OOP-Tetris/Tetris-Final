@@ -100,6 +100,7 @@ void Maze::comboEvent()
     printer.show_total_block(total_block, level);
     Sleep(100);
 }
+
 void Maze::init() {
 	for (int i = 0; i < 20; i++)
 		for (int j = 0; j < 14; j++)
@@ -253,6 +254,7 @@ int Maze::move_block()
         comboEvent();
         if (check_FirstComb) {
             printer.show_combo();
+            printer.show_keeped_block(*keeped_block, level);
             printer.show_total_block(total_block, level);
             printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
             check_FirstComb = false;

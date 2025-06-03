@@ -25,7 +25,7 @@ Stages::Stages() {
 	stage_data[7].speed=10;
 	stage_data[7].stick_rate=13;
 	stage_data[7].clear_line=2;
-	stage_data[8].speed=6;
+	stage_data[8].speed=30;
 	stage_data[8].stick_rate=12;
 	stage_data[8].clear_line=4;
     stage_data[9].speed = 20;         // for testing purposes, speed is set to 20

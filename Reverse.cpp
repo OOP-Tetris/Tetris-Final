@@ -271,6 +271,7 @@ int Reverse::move_block() {
         next_block = new Block(stages.get_stick_rate(level), true);
             if (check_FirstComb) {
                 printer.show_combo();
+                printer.show_keeped_block(*keeped_block, level);
                 printer.show_total_block(total_block, level);
                 printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
                 check_FirstComb = false;
