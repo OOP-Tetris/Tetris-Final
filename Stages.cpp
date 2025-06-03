@@ -3,7 +3,7 @@
 Stages::Stages() {
     stage_data[0].speed=40; //각 레벨 별 떨어지는 속도 지정
 	stage_data[0].stick_rate=20;	
-	stage_data[0].clear_line=2; //쉬운 확인을 위해 클리어해야하는 줄의 수 1로 변경
+	stage_data[0].clear_line=3; //쉬운 확인을 위해 클리어해야하는 줄의 수 1로 변경
 	stage_data[1].speed=38;
 	stage_data[1].stick_rate=18;
 	stage_data[1].clear_line=2;

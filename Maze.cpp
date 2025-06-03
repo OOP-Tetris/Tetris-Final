@@ -250,13 +250,15 @@ int Maze::move_block()
 			return 1;
 		}
         //새로 추가된 내용 지금 스테이지 목표 줄의 절반이 깨지는 경우에는 가장 아래에 있는 줄 한개를 삭제시킨다
-           if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
+           if (clearedRows != 0 && stages.get_clear_line(level) / clearedRows == 2) {
         comboEvent();
         if (check_FirstComb) {
             printer.show_combo();
-            printer.show_keeped_block(*keeped_block, level);
             printer.show_total_block(total_block, level);
-            printer.show_gamestat(level, score, stages.get_clear_line(level) - lines);
+            printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
+            if (keeped_block != nullptr) {
+                printer.show_keeped_block(*keeped_block, level);
+            }
             check_FirstComb = false;
         }
         else {
