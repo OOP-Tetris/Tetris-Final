@@ -57,7 +57,7 @@ void Printer::show_keys() {
         gotoxy(10, 14);
 		printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 		gotoxy(10, 3);
-		printf("Select Start level[1-8]:       \b\b\b\b\b\b\b");
+		printf("Select Start level[1-10]:       \b\b\b\b\b\b\b");
 		// 출력 버퍼 비우기
 		fflush(stdout);
 }
