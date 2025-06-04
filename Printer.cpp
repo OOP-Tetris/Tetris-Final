@@ -456,26 +456,36 @@ void Printer::erase_ghostBlock(Block& b, char total_block[21][14])
 
 
 
-
 void Printer::show_combo()
 {
-    SetColor(BLUE);
-    gotoxy(15, 8);
-    printf("┌────────────────────────────────-──────────────┐");
-    gotoxy(15, 9);
-    printf("│  ██████╗ ██████╗ ███╗   ███╗██████╗  ██████╗  │");
-    gotoxy(15, 10);
-    printf("│ ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔═══██╗ │");
-    gotoxy(15, 11);
-    printf("│ ██║     ██║   ██║██╔████╔██║██████╔╝██║   ██║ │");
-    gotoxy(15, 12);
-    printf("│ ██║     ██║   ██║██║╚██╔╝██║██╔══██╗██║   ██║ │");
-    gotoxy(15, 13);
-    printf("│ ╚██████╗╚██████╔╝██║ ╚═╝ ██║██████╔╝╚██████╔╝ │");
-    gotoxy(15, 14);
-    printf("│  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═════╝  ╚═════╝  │");
-    gotoxy(15, 15);
-    printf("└─────────────────────────────────-─────────────┘");
+    flash_map_border();
+    const int colors[] = { RED, YELLOW, GREEN, SKY_BLUE, BLUE, VOILET };
+    const int colorCount = sizeof(colors) / sizeof(colors[0]);
+
+    for (int loop = 0; loop < 6; ++loop) { // 총 6번 깜빡이게
+        SetColor(colors[loop % colorCount]);
+
+        gotoxy(15, 8);
+        printf("┌────────────────────────────────-──────────────┐");
+        gotoxy(15, 9);
+        printf("│  ██████╗ ██████╗ ███╗   ███╗██████╗  ██████╗  │");
+        gotoxy(15, 10);
+        printf("│ ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔═══██╗ │");
+        gotoxy(15, 11);
+        printf("│ ██║     ██║   ██║██╔████╔██║██████╔╝██║   ██║ │");
+        gotoxy(15, 12);
+        printf("│ ██║     ██║   ██║██║╚██╔╝██║██╔══██╗██║   ██║ │");
+        gotoxy(15, 13);
+        printf("│ ╚██████╗╚██████╔╝██║ ╚═╝ ██║██████╔╝╚██████╔╝ │");
+        gotoxy(15, 14);
+        printf("│  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═════╝  ╚═════╝  │");
+        gotoxy(15, 15);
+        printf("└─────────────────────────────────-─────────────┘");
+
+        Sleep(100);
+    }
+
+    SetColor(GRAY); // 원래 색으로 복구
 
     fflush(stdin);
     Sleep(500);
@@ -537,7 +547,7 @@ void Printer::dialog_line(const char* speaker, const char* lines[], int lineCoun
     // 안내 메시지
     gotoxy(DIALOG_X, DIALOG_Y + DIALOG_LINES + 3);
     printf("▶ 계속하려면 아무 키나 누르세요...");
-    _getch();
+    (void)_getch();
 
     // 안내 메시지 지움
     gotoxy(DIALOG_X, DIALOG_Y + DIALOG_LINES + 3);
@@ -807,3 +817,41 @@ void Printer::ending() {
 }
 
 
+
+
+void Printer::flash_map_border() {
+    const int colors[] = { RED, YELLOW, GREEN, SKY_BLUE, BLUE, VOILET };
+    const int colorCount = sizeof(colors) / sizeof(colors[0]);
+
+    // 맵 테두리 위치
+    const int top = 0, left = 5;
+    const int width = 12, height = 20;
+
+    for (int t = 0; t < 6; ++t) {
+        SetColor(colors[t % colorCount]);
+
+        // 상단 테두리
+        for (int x = 0; x <= width + 1; ++x) {
+            gotoxy(left + x * 2, top);
+            printf("■");
+        }
+
+        // 하단 테두리
+        for (int x = 0; x <= width + 1; ++x) {
+            gotoxy(left + x * 2, top + height + 1);
+            printf("■");
+        }
+
+        // 좌우 테두리
+        for (int y = 1; y <= height; ++y) {
+            gotoxy(left, top + y);
+            printf("■");
+            gotoxy(left + (width + 1) * 2, top + y);
+            printf("■");
+        }
+
+        Sleep(100);
+    }
+
+    SetColor(GRAY); // 복원
+}

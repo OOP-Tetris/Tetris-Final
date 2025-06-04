@@ -49,4 +49,6 @@ class Printer {
         void repeat_level();
         void weird_stage();
         void ending();
+
+        void flash_map_border();
 };
