@@ -51,4 +51,7 @@ class Printer {
         void ending();
 
         void flash_map_border();
+        void showSystemScreenWithMessage(const char* message);
+        void mirror();
+        void reverse();
 };
