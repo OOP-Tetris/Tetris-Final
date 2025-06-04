@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
 	SetConsoleOutputCP(CP_UTF8);
-
+    system("mode con cols=120 lines=50");
 	GameManager manager;
     manager.run();
 
