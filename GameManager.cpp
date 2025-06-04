@@ -113,7 +113,7 @@ void GameManager::run() {
                 system("cls");
                 printer.show_logo();
 			}
-			else {
+			else .
 				break;
 			}
             */
