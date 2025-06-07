@@ -17,23 +17,20 @@ Maze::Maze(int score) : Game(score)
 
 void Maze::makeMaze(char total_block[21][14])
 {
+    rows = stages.get_clear_line(level); // 레벨에 따라 줄 수 설정
 
 	switch (level)
 	{
 	case 2:
-		rows = 2;
 		spaceNum = 2;
 		break;
 	case 5:
-		rows = 3;
 		spaceNum = 3;
 		break;
 	case 8:
-		rows = 4;
 		spaceNum = 4;
 		break;
     case 9:
-        rows = 5;
         spaceNum = 5;
         break;
 	default:
