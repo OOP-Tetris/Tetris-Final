@@ -144,7 +144,7 @@ void Maze::init() {
 
     lines = 0;
     cleared = false;
-    comboUsed = false;
+    //comboUsed = false;
 }
 
 void Maze::block_start(Block* b) {
@@ -286,9 +286,9 @@ int Maze::move_block()
         int is_over = merge_block();
 
         //새로 추가된 내용 지금 스테이지 목표 줄의 절반이 깨지는 경우에는 가장 아래에 있는 줄 한개를 삭제시킨다
-        if (!comboUsed && clearedRows * 2 == rows) {
+        if (clearedRows * 2 == rows) {
             comboEvent();
-            comboUsed = true;
+            //comboUsed = true;
 
             if (check_FirstComb) {
                 //printer.show_combo();

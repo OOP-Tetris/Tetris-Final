@@ -11,7 +11,7 @@ protected:
 	int rows;		// 총 줄 수
 	int spaceNum;	// 한 줄에 나타나는 빈칸 개수
 	int clearedRows; // 깨진 미로 줄 수
-    bool comboUsed = false;
+    //bool comboUsed = false;
 public:
 	Maze();
     Maze(int score);

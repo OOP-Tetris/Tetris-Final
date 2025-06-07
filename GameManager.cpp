@@ -31,6 +31,17 @@ int GameManager::input_level() {
 
         //&& buf[0] >= '1' && buf[0] <= '9'
 
+        // 빈 입력이면 다시 반복
+        if (strlen(buf) == 0) {
+            printer.gotoxy(10, 4);
+            printf("올바른 숫자를 입력해주세요.");
+            Sleep(1000);
+            printer.gotoxy(10, 4);
+            printf("                            ");
+            system("cls");
+            continue;
+        }
+
 		// 문자열이 정수형 숫자 하나로만 이루어졌는지 확인 - test: enable level 10
 		if (strlen(buf) <= 2 ) {
 			//i = buf[0] - '0'; // 문자 → 정수로 변환
