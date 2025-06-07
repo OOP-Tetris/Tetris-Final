@@ -1,4 +1,4 @@
-﻿#include "Maze.h"
+#include "Maze.h"
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
@@ -89,12 +89,11 @@ bool Maze::isCleared() {
 
 void Maze::comboEvent()
 {
-    lines++;
-     clearedRows++;;
+    int checkStart = 20 - (rows - clearedRows); // 아직 안 사라진 줄의 시작점
     for (int i = 0; i < 13; i++) {
-       total_block[19][i] = 1;
+       total_block[checkStart][i] = 1;
     }
-
+    
     printer.show_total_block(total_block, level);
     Sleep(100);
 }
@@ -212,6 +211,8 @@ int Maze::strike_check() {
 int Maze::move_block()
 {
 	printer.erase_cur_block(*curr_block);
+    
+   
 
 	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
 	if (strike_check() == 1)
@@ -247,25 +248,24 @@ int Maze::move_block()
 
 			return 1;
 		}
-     
-        
-        //새로 추가된 내용 지금 스테이지 목표 줄의 절반이 깨지는 경우에는 가장 아래에 있는 줄 한개를 삭제시킨다
-           if (clearedRows != 0 && stages.get_clear_line(level) / clearedRows == 2 ) {
-        comboEvent();
-        if (check_FirstComb) {
-            printer.show_combo();
-            printer.show_total_block(total_block, level);
-            printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
-            if (keeped_block != nullptr) {
-                printer.show_keeped_block(*keeped_block, level);
+
+        if (clearedRows != 0 && stages.get_clear_line(level) / clearedRows == 2) {
+
+            comboEvent();
+            if (check_FirstComb) {
+                printer.show_combo();
+                printer.show_total_block(total_block, level);
+                printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
+                if (keeped_block != nullptr) {
+                    printer.show_keeped_block(*keeped_block, level);
+                }
+                check_FirstComb = false;
             }
-            check_FirstComb = false;
+            else {
+                check_FirstComb = true;
+            }
         }
-        else {
-            check_FirstComb = true;
-        }
-        
-}
+           
 		int is_over = merge_block();
 
 		if (is_over == 3) {
