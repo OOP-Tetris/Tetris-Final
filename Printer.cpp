@@ -555,9 +555,9 @@ void Printer::dialog_line(const char* speaker, const char* lines[], int lineCoun
 }
 
 
-void Printer::showSystemScreenWithMessage(const char* message) {
-    const int startX = 5;  // 텍스트 시작 X 좌표
-    const int startY = 1;  // 텍스트 시작 Y 좌표
+void Printer::showSystemScreen(const char* lines[], int lineCount) {
+    const int startX = 18;
+    const int startY = 1;
 
     SetColor(RED);
 
@@ -575,35 +575,51 @@ void Printer::showSystemScreenWithMessage(const char* message) {
     gotoxy(startX, startY + 5);
     printf("  ╚═╝╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝╚═╝  ");
 
-    // 가로선 출력
+    // 박스 위치 및 크기
+    const int boxWidth = 74;
+    const int boxHeight = 9;
+    const int boxX = 13;
+    const int boxY = startY + 8;
+
     SetColor(WHITE);
-    gotoxy(0, startY + 7);
-    for (int i = 0; i < 100; ++i) printf("─");
 
-    // 메시지 박스 출력
-    int boxWidth = strlen(message) + 4;
-    int boxX = (100 - boxWidth) / 2;
-    int boxY = startY + 12;
-
-    SetColor(RED);
+    // 박스 상단
     gotoxy(boxX, boxY);
     printf("┌");
     for (int i = 0; i < boxWidth - 2; ++i) printf("─");
     printf("┐");
 
-    gotoxy(boxX, boxY + 1);
-    printf("│ %-*s │", boxWidth - 4, message);
+    // 박스 내부
+    for (int i = 1; i < boxHeight - 1; ++i) {
+        gotoxy(boxX, boxY + i);
+        printf("│");
+        for (int j = 0; j < boxWidth - 2; ++j) printf(" ");
+        printf("│");
+    }
 
-    gotoxy(boxX, boxY + 2);
+    // 박스 하단
+    gotoxy(boxX, boxY + boxHeight - 1);
     printf("└");
     for (int i = 0; i < boxWidth - 2; ++i) printf("─");
     printf("┘");
 
-    gotoxy((100 - 30) / 2, boxY + 4);
+    // 메시지 출력 (중앙 정렬)
+    SetColor(YELLOW);
+    int firstLineY = boxY + (boxHeight - lineCount) / 2;
+    for (int i = 0; i < lineCount; ++i) {
+        int len = strlen(lines[i]);
+        int msgX = boxX + (boxWidth - len) / 2;
+        gotoxy(msgX, firstLineY + i);
+        printf("%s", lines[i]);
+    }
+
+    // 안내 문구
     SetColor(GRAY);
+    gotoxy(boxX + (boxWidth - 30) / 2, boxY + boxHeight + 1);
     printf("▶ 계속하려면 아무 키나 누르세요...");
     _getch();
 }
+
 
 
 
@@ -678,14 +694,14 @@ void Printer::reverse_stage() {
     const char* lines5[] = { " ", "거꾸로인게 어쨌단 거지..." };
     dialog_line("나", lines5, 2);
 
-    showSystemScreenWithMessage("안녕");
+    system("cls");
 
     const char* systemLines[] = {
         "세상이 거꾸로 뒤집혔다!",
         "당신은 거꾸로나라에 도착했습니다!",
         "테트리스의 맵이 거꾸로 뒤집히니 조심하세요!"
     };
-    dialog_line("<system>", systemLines, 3);
+    showSystemScreen(systemLines, 3);
 
     system("cls");
 }
@@ -720,13 +736,14 @@ void Printer::mirror_stage() {
 
     const char* lines7[] = { " ", "방향이... 뒤죽박죽...? 또 뭔데 그건..." };
     dialog_line("나", lines7, 2);
+    system("cls");
 
     const char* systemLines[] = {
         "방향키의 조작이 마음대로 바뀐다??",
         "당신은 거울나라에 도착했습니다!",
         "테트리스의 방향키가 계속해서 바뀌니 조심하세요!"
     };
-    dialog_line("<system>", systemLines, 3);
+    showSystemScreen( systemLines, 3);
 
     system("cls");
 }
@@ -734,6 +751,7 @@ void Printer::mirror_stage() {
 void Printer::miro_stage() {
     system("cls");
     hideCursor();
+    miro();
 
     draw_dialog_frame();
 
@@ -755,12 +773,14 @@ void Printer::miro_stage() {
     const char* lines6[] = { " ", "미로..?" };
     dialog_line("나", lines6, 2);
 
+    system("cls");
+
     const char* systemLines[] = {
         "당신은 미로에 갇혔다!",
         "당신은 미로나라에 도착했습니다!",
         "테트리스에 미로 장애물이 나타나니 미로 끝에 잘 도달해보세요!"
     };
-    dialog_line("<system>", systemLines, 3);
+    showSystemScreen( systemLines, 3);
 
     system("cls");
 }
@@ -782,11 +802,13 @@ void Printer::repeat_level() {
     const char* lines4[] = { " ", "...뭐라고?" };
     dialog_line("나", lines4, 2);
 
+    system("cls");
+
     const char* systemLines[] = {
         "블럭이 더 빠른 속도로 추락한다!",
         "여태 거쳐온 나라를 두 번씩 더 탈출하자!"
     };
-    dialog_line("<system>", systemLines, 2);
+    showSystemScreen(systemLines, 2);
 
     system("cls");
 }
@@ -841,7 +863,7 @@ void Printer::weird_stage() {
         "거꾸로 나라 + 거울 나라 + 미로 나라",
         "모든 효과가 동시에 적용됩니다. 끝까지 버텨보세요!"
     };
-    dialog_line("<system>", systemLines, 3);
+    showSystemScreen(systemLines, 3);
 
     system("cls");
 }
@@ -970,4 +992,32 @@ void Printer::reverse() {
     gotoxy(13, 26); printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢦⠈⠈⠉⠒⠁⣀⡜⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
     gotoxy(13, 27); printf("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⠐⠒⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n");
 
+}
+
+
+
+void Printer::miro() {
+    gotoxy(13, 1); printf("⣀⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠤⠤⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+    gotoxy(13, 2); printf("⠀⠀⠘⠒⠢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⢘⠀⠀⠀⠀⠈⢢⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀");
+    gotoxy(13, 3); printf("⠀⠀⠀⠀⠀⠉⢁⡆⠀⠀⠀⠀⢀⠤⠐⠠⠤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠦⠠⢄⠀⠀⠀⠀⠀⠀⢀⣀⠎⠁⠀⠉");
+    gotoxy(13, 4); printf("⠉⠉⠉⠉⠁⠉⠀⠀⠀⠀⡠⠄⠎⠀⠀⠀⠀⠈⣆⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠠⠜⠀⠀⠀⠀⠀⠘⠥⠤⠤⠤⠤⠤");
+    gotoxy(13, 5); printf("⠀⠀⡠⠤⠤⢄⡀⠀⡰⠒⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠤⠤⣀⠀⠀");
+    gotoxy(13, 6); printf("⢀⠎⠁⠀⠀⠀⠘⡄⠈⠓⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠒⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠚⠊⠑⠢⡰⠉⠀⠀⠀⠈⠱⡀");
+    gotoxy(13, 7); printf("⠌⠀⠀⠀⠀⠀⠀⠘⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢔⡢⠭⠬⢔⡢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠒⠒⢰⠀⠀⠀⠀⠰⡁⠀⠀⠀⠀⠀⠀⠳");
+    gotoxy(13, 8); printf("⣣⠀⠀⠀⠀⠀⠀⢨⡂⡔⡒⢉⡒⢤⣀⢀⣀⡀⣀⢀⣀⢀⣀⣀⢀⡀⢀⡀⣰⠱⠁⢀⠤⢄⡀⠈⡞⣀⣀⢀⣀⢀⣀⡀⢀⣀⡀⣀⡏⣀⢀⣀⠀⢣⡀⣀⣀⢘⡆⠀⠀⠀⠀⠀⢀⡧");
+    gotoxy(13, 9); printf("⠀⠢⣄⡀⢀⣀⠤⠃⠀⠀⠈⡥⠴⢤⠤⡥⢤⠀⠀⠀⠀⠀⣀⠀⠀⠈⠁⠈⠀⢸⠀⡎⠀⠀⡃⠀⡇⠁⠀⠀⠀⠀⠀⠈⠀⠀⠀⢀⣀⣀⣀⣀⣉⣀⣀⠀⠀⠀⠘⠤⣀⣀⣀⠤⠊⠀");
+    gotoxy(13, 10); printf("⠀⠀⠀⢸⠀⡀⢀⣀⣀⠄⠤⢴⠀⠀⠀⢰⠥⠄⠠⠀⢄⡐⡥⢇⣀⣀⣀⠀⠀⢰⠀⡇⢀⡀⡅⣀⡇⠀⠠⠤⠤⠤⠤⠤⠤⠤⠤⠼⠦⠐⠲⠤⡀⢸⠂⠭⣑⠂⠤⢀⡀⡇⠀⠀⠀⠀");
+    gotoxy(13, 11); printf("⠒⠈⠉⠹⠨⠤⠤⠤⠖⠒⡈⠙⣤⣤⡔⠊⢐⡈⠳⠯⠿⠻⠿⠟⠉⠤⠼⠤⠤⠴⠤⠤⠤⠤⠤⠤⠧⠤⠌⠲⠄⠉⠛⢍⠉⢉⡬⠡⡌⠭⠴⠦⢌⡙⠠⠤⣀⠈⠁⠒⠠⡇⡑⠒⠤⠄");
+    gotoxy(13, 12); printf("⠤⠔⠒⢂⣉⠉⠬⠭⢩⠉⣅⠡⢖⣈⠢⢭⣁⠒⡒⠓⠊⠡⠉⠍⠩⠍⠭⠩⠭⡍⠉⠉⠉⢱⠀⠸⠩⠍⠭⠩⠍⢍⡉⠈⡇⡼⡤⢤⡼⠀⡚⠐⠤⣈⠑⠒⠤⣉⠑⠒⠤⢄⡀⠉⠒⠂");
+    gotoxy(13, 13); printf("⠒⠒⠉⠁⣀⠤⠧⠤⠤⠤⠤⠭⠬⠬⠭⠼⠤⠥⠬⠍⢭⠁⠉⠈⣡⠋⠀⢠⠊⡔⠀⠀⠀⢸⠒⠒⠒⠒⠂⢱⢢⠀⠑⠦⠧⠬⢩⠥⠮⠤⠥⠤⠤⠬⠱⠒⠰⠄⠛⠲⠀⠀⠈⠙⠒⠤");
+    gotoxy(13, 14); printf("⡠⠔⠊⠉⢀⡠⠔⢢⠁⠘⠐⠂⠃⠒⠈⠒⠒⠒⠒⡎⠁⡇⠀⢰⠁⡀⢀⠉⡉⢈⠉⡉⢉⠈⠉⠉⢡⠀⠀⢸⠀⠳⡀⠀⠐⡖⣉⢊⠓⡌⠁⠉⠈⠁⠉⠉⠁⠉⠉⠁⠉⠉⠉⠉⠉⠈");
+    gotoxy(13, 15); printf("⣀⠤⠔⠊⠁⠀⠀⢀⠃⠀⠀⡠⠔⠊⠈⠁⣉⣉⣉⣉⣉⣉⣉⣉⣁⣈⣀⣀⣀⣀⡀⣀⡀⡇⠀⠀⠘⡒⠒⠚⡄⠀⠙⣄⠀⠈⠉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⣉⠉⠒⠤");
+    gotoxy(13, 16); printf("⠀⠀⠀⠀⠀⠀⠀⢈⠆⢰⠍⠤⠤⠤⢐⠉⡒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⡧⠠⠄⠸⠄⠤⠈⠆⠀⠀⠈⠢⡀⠀⠀⠀⣀⣀⠀⡄⢠⠀⡄⠤⠠⠬⠑⠦⠤");
+    gotoxy(13, 17); printf("⠀⠀⠀⠀⡤⣒⠲⠊⠖⠎⠖⠲⠒⠖⣚⢄⠣⠀⠀⠀⢠⠊⠉⠈⢉⣉⣉⣉⣉⣉⣉⣉⣁⣀⣀⣀⣀⢰⠀⠀⠀⡖⠒⠒⠒⠒⠒⠒⠒⠙⡆⠀⠀⡇⠑⢄⡀⠀⠀⢤⠤⠤⠤⠤⠤⠤");
+    gotoxy(13, 18); printf("⠀⠀⣀⠴⠪⢥⠑⠚⣒⣚⣒⠡⠉⠬⠥⠚⢇⠀⠀⡔⠁⠀⠀⢠⢫⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠄⠀⠀⠱⠤⠤⠤⠤⢄⠀⠀⠀⡇⠀⠀⡇⠀⠀⠑⠢⡀⠀⠑⠢⡄⠀⠀⠀");
+    gotoxy(13, 19); printf("⠔⠊⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠈⢉⠍⠀⠀⠀⢠⠃⢸⠀⠀⠀⠀⠏⠉⠉⠉⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⠀⠀⡗⠒⠂⢇⠀⠀⠀⠀⠈⠒⣄⠀⠀⠑⠤⡀");
+    gotoxy(13, 20); printf("⠀⠀⢀⡠⠒⠉⡆⠀⠀⠀⠀⠀⠀⡌⠀⠁⠈⠀⠀⠀⠀⢠⠃⠀⢰⠂⠒⠐⢸⠀⠀⠀⠀⡏⠉⠉⠉⠉⠉⠉⠉⠉⠉⢹⠄⠀⠀⠀⠱⡀⡇⠀⠀⠈⠢⡀⠀⠀⠀⠀⠀⠑⢄⡀⠀⠈");
+    gotoxy(13, 21); printf("⠀⡴⠥⠤⠤⠤⠱⡄⠀⠀⠀⢀⡰⠃⠒⠒⠐⠒⠐⠒⠒⡁⠀⢀⠇⢠⠒⠑⠂⠀⠀⠀⠀⡇⠀⠀⡔⠒⠒⠒⠒⠒⢲⢸⠘⡄⠀⠀⠀⠙⣄⣀⣀⣀⣀⡘⢦⡀⠤⠠⠄⠤⠠⠑⠦⠀");
+    gotoxy(13, 22); printf("⠀⡇⠀⠀⠀⠀⠀⠈⠯⠼⢭⠕⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⡜⠀⡎⠀⠀⢀⡏⠈⠉⠁⡇⣀⣀⡇⠀⢸⠉⠉⢱⢠⢸⠀⠘⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+    gotoxy(13, 23); printf("⠀⡅⠀⠀⠀⠀⢀⡠⠜⠀⠈⠢⡄⢀⡀⠀⠀⠀⠀⠀⠰⠀⡰⠀⢰⠁⠀⠀⠸⡇⠀⠀⠀⡇⠀⠀⠀⣀⡠⠆⠀⠀⠉⢸⠀⠀⢘⠒⠈⠒⠈⠒⠈⠒⠈⠂⠑⠈⠀⠁⠈⠀⠁⠈⠀⠁");
 }
