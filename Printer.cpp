@@ -265,7 +265,7 @@ int Printer::show_logo()
 			{
 				//여기서 18의 값을 조정해서 첫번째 블럭도 다 지워지도록 조정
 				gotoxy(19,20+j);
-				printf("                                                                 ");
+				printf("                                                                   ");
 				
 				
 			}
