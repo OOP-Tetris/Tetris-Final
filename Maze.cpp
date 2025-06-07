@@ -68,7 +68,7 @@ bool Maze::isCleared() {
     }
 
     // 꽉 찼으면 줄 없애고 clearedRows 증가
-    for (int j = 1; j < 13; j++) {
+    /*for (int j = 1; j < 13; j++) {
         total_block[checkStart][j] = 0;
     }
 
@@ -79,7 +79,7 @@ bool Maze::isCleared() {
     }
     for (int j = 1; j < 13; j++) {
         total_block[0][j] = 0;
-    }
+    }*/ //중복호출
 
     clearedRows++;
     if (clearedRows == rows) {
