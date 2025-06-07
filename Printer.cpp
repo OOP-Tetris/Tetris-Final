@@ -554,6 +554,23 @@ void Printer::dialog_line(const char* speaker, const char* lines[], int lineCoun
     printf("                                         ");
 }
 
+int Printer::getVisualWidth(const char* str) {
+    int width = 0;
+    while (*str) {
+        unsigned char c = (unsigned char)*str;
+        if (c >= 0x80) {
+            width += 2;
+            ++str;
+            while ((*str & 0xC0) == 0x80) ++str; // 멀티바이트 뒷부분 넘기기
+        }
+        else {
+            ++str;
+            ++width;
+        }
+    }
+    return width;
+}
+
 
 void Printer::showSystemScreen(const char* lines[], int lineCount) {
     const int startX = 18;
@@ -603,12 +620,12 @@ void Printer::showSystemScreen(const char* lines[], int lineCount) {
     for (int i = 0; i < boxWidth - 2; ++i) printf("─");
     printf("┘");
 
-    // 메시지 출력 (중앙 정렬)
+    // 메시지 출력 (시각적 가운데 정렬)
     SetColor(YELLOW);
     int firstLineY = boxY + (boxHeight - lineCount) / 2;
     for (int i = 0; i < lineCount; ++i) {
-        int len = strlen(lines[i]);
-        int msgX = boxX + (boxWidth - len) / 2;
+        int visualWidth = getVisualWidth(lines[i]);
+        int msgX = boxX + (boxWidth - visualWidth) / 2;
         gotoxy(msgX, firstLineY + i);
         printf("%s", lines[i]);
     }
@@ -617,7 +634,7 @@ void Printer::showSystemScreen(const char* lines[], int lineCount) {
     SetColor(GRAY);
     gotoxy(boxX + (boxWidth - 30) / 2, boxY + boxHeight + 1);
     printf("▶ 계속하려면 아무 키나 누르세요...");
-    _getch();
+    (void)_getch();
 }
 
 

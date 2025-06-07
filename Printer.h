@@ -51,6 +51,7 @@ class Printer {
         void ending();
 
         void flash_map_border();
+        int getVisualWidth(const char* str);
         void showSystemScreen(const char* lines[], int lineCount);
         void mirror();
         void reverse();
