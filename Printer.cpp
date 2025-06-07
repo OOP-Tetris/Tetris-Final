@@ -874,6 +874,7 @@ void Printer::weird_stage() {
         "미쳤네 진짜..."
     };
     dialog_line("나", lines6, 2);
+    system("cls");
 
     const char* systemLines[] = {
         "당신은 이상한 나라에 도착했습니다!",
