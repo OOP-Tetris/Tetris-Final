@@ -42,7 +42,6 @@ public:
     virtual void block_start(Block* b) = 0;
     virtual void reset_stage();
     virtual int operate_key(int keytemp);
-    //이 함수가 거꾸로 나라에는 맏지 않아 가상함수로 받고 Reverse.h에 override해서 재정의했습니다
     virtual int check_full_line();
     virtual bool isCleared() = 0;
     

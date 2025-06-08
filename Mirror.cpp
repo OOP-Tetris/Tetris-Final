@@ -111,21 +111,16 @@ int Mirror::move_block()
 {
 	printer.erase_cur_block(*curr_block);
 
-	curr_block->move_down();	//ºí·°À» ÇÑÄ­ ¾Æ·¡·Î ³»¸²
+	curr_block->move_down();	
 	if (strike_check() == 1)
 	{
-		//ÀÌ ³»¿ëÀº »õ·Î Ãß°¡µÈ ºÎºÐÀ¸·Î ±âÁ¸¿¡ ÀÌ ÄÚµå°¡ ¾ø¾úÀ» ¶§´Â ºí·ÏÀÇ À§Ä¡°¡ -3¿¡¼­ ½ÃÀÛÇÏ´Â °æ¿ì¿¡ ´ëÇØ¼­ ±× »óÈ²¿¡¼­ ¹æÇâ Á¶ÀÛÅ°¸¦ ÀÔ·ÂÇÏ°í ½ºÆäÀÌ½º¸¦ ÀÔ·ÂÇÏ´Â °æ¿ì °©ÀÚ±â °ÔÀÓ Á¾·áµÇ´Â ¹®Á¦°¡ ÀÖ¾î¼­ ÄÚµå¸¦ Ãß°¡Çß½À´Ï´Ù
 		if (curr_block->get_y() < 0) {
 			return 0;
 		}
 
 		curr_block->move_up();
-		if (curr_block->get_y() < 0)	//°ÔÀÓ¿À¹ö
+		if (curr_block->get_y() < 0)	
 		{
-
-			//printer.SetColor(3);
-			//printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
-			//system("pause");
 
 			printer.SetColor(DARK_GRAY);
 			for (int i = 0; i < 4; i++) {
@@ -159,7 +154,6 @@ int Mirror::move_block()
 		delete curr_block;
 		curr_block = next_block;
         random_key();
-		//¸¸¾à Å¬¸®¾îÇÑ ¶óÀÎÀÇ ¼ö°¡ ±ú¾ßµÇ´Â ÁÙÀÇ ¹ÝÀÌ¶ó¸é ÄÞº¸°¡ ¹ßµ¿ÇØ ´ÙÀ½ºí·ÏÀº ¹«Á¶°Ç ÀÏÀÚ ºí·ÏÀÌ ³ª¿Â´Ù
 		if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
             next_block = new Block(stages.get_stick_rate(level), true);
             if (check_FirstComb) {

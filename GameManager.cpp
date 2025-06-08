@@ -29,7 +29,6 @@ int GameManager::input_level() {
 			while ((ch = getchar()) != '\n' && ch != EOF);
 		}
 
-        //&& buf[0] >= '1' && buf[0] <= '9'
 
         // 빈 입력이면 다시 반복
         if (strlen(buf) == 0) {
@@ -44,7 +43,6 @@ int GameManager::input_level() {
 
 		// 문자열이 정수형 숫자 하나로만 이루어졌는지 확인 - test: enable level 10
 		if (strlen(buf) <= 2 ) {
-			//i = buf[0] - '0'; // 문자 → 정수로 변환
             i = atoi(buf); // 문자열을 정수로 변환
 			break;
 		}
@@ -119,47 +117,8 @@ void GameManager::run() {
 
 			// Game 객체 내부에서 cleared가 true로 설정되었는지 확인
 			bool game_cleared_result = game->getCleared();
-			// Game 객체 내부에서 실제로 레벨이 몇으로 바뀌었는지 확인 (디버깅용)
-			int final_game_level = game->getLevel();
 
             score += game->getScore();
-
-
-            /*
-			// Game 객체가 클리어되었고, Game 객체 내부 레벨이 GameManager의 레벨보다 높다면
-			// (즉, 레벨업이 발생했다면) GameManager의 레벨도 업데이트합니다.
-			if (game_cleared_result && final_game_level > manager_level) { // 클리어되었는지 확인
-				manager_level = final_game_level; // GameManager의 레벨을 Game 객체의 최종 레벨로 업데이트!;
-			}
-			else if (!game_cleared_result && final_game_level == 10) {
-				printer.show_clear_screen(game->getScore());
-                system("cls");
-                printer.show_logo();
-			}
-			else .
-				break;
-			}
-            */
-
-            if (game_cleared_result && final_game_level > manager_level) {
-                manager_level = final_game_level;
-                if (manager_level == 10) {
-                    printer.show_clear_screen(game->getScore());
-                    printf("▶ 아무 키나 누르면 메인 화면으로 돌아갑니다...");
-                    (void)_getch();
-                    system("cls");
-                    break;
-                }
-            }
-            else {
-                break;
-            }
-
-
-
 		}
 	}
-	
-
-
 }

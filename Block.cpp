@@ -1,4 +1,4 @@
-#include "Block.h"
+﻿#include "Block.h"
 
 Block::Block(int shape, int angle, int x, int y, bool combo) : block_shape(shape), block_angle(angle), block_x(x), block_y(y), combo(combo) {}
 
@@ -12,7 +12,6 @@ Block::Block(int stick_rate, bool combo) {
 		shape = 0;				//막대기 모양으로 리턴
 	else
 		shape = (rand() % 6) + 1;		//shape에는 1~6의 값이 들어감
-	//콤보인 상황에서 일단 미로 나라를 제외한 나머지 나라는 일자 블록이 나오게 설계했고 미로나라는 완성되면 여기에 조건을 붙혀서 이벤트를 발생시켜야 합니다
 	if (combo) {
 		shape = 0;
 	}
