@@ -68,7 +68,7 @@ int Reverse::check_full_line()
 
 
             if (stages.get_clear_line(level) <= lines) {
-                if (level < 10) {
+                if (level < 9) {
                     lines = 0;
                     level++;
                     init();

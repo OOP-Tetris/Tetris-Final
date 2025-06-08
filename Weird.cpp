@@ -70,7 +70,7 @@ int Weird::check_full_line()
 
             //줄과 레벨 확인
             if (isCleared()) {
-                if (level < 10) {
+                if (level < 9) {
                     lines = 0;
                     level++;
                     cleared = true;

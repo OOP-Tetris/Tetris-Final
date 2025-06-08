@@ -363,6 +363,7 @@ int Printer::show_gamestat(int level, int score, int lines_left)
 }
 
 int Printer::show_clear_screen(int score) {
+    ending();
 	SetColor(YELLOW);
 	system("cls");
 	gotoxy(10, 9);
@@ -969,10 +970,12 @@ void Printer::ending() {
     dialog_line("나", lines1, 3);
     system("cls");
 
+    draw_dialog_frame();
     const char* lines2[] = { " ", "잘가... 간만에 즐거웠다.." };
     dialog_line("??", lines2, 2);
     system("cls");
 
+    draw_dialog_frame();
     const char* lines3[] = {
         " ",
         "(졸린 눈을 뜨며)",
@@ -1008,7 +1011,7 @@ void Printer::flash_map_border() {
 
         // 하단 테두리
         for (int x = 0; x <= width + 1; ++x) {
-            gotoxy(left + x * 2, top + height + 1);
+            gotoxy(left + x * 2, top + height);
             printf("■");
         }
 
