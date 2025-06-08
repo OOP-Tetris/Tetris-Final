@@ -264,8 +264,8 @@ int Maze::move_block()
             
         }
 
-        delete curr_block;
-        curr_block = next_block;
+        /*delete curr_block;
+        curr_block = next_block;*/
         
         if (is_over == 3) {
             return 3;
@@ -274,7 +274,8 @@ int Maze::move_block()
             return 4;
         }
 
-        
+        delete curr_block;
+        curr_block = next_block;
 
 
         next_block = new Block(stages.get_stick_rate(level));
