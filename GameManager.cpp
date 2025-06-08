@@ -131,7 +131,7 @@ void GameManager::run() {
             int final_game_level = game->getLevel();
 
             score += game->getScore();
-
+            delete game;
 
             if (game_cleared_result && final_game_level > manager_level) {
                 manager_level = final_game_level;
