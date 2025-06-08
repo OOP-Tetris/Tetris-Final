@@ -60,10 +60,9 @@ void Game::run() {
 
 void Game::play_loop() {
     for (int i = 1;; i++) {
-        printer.gotoxy(50, 1);
-        cout << level;
+        //printer.gotoxy(50, 1);
         if (_kbhit()) {
-            keytemp = _getche();
+            keytemp = _getch();
             operate_key(keytemp);
         }
 
@@ -100,7 +99,7 @@ void Game::play_loop() {
 
 int Game::operate_key(int keytemp) {
     if (keytemp == EXT_KEY) {
-        keytemp = _getche();
+        keytemp = _getch();
         switch (keytemp) {
             case KEY_UP:
                 rotate();

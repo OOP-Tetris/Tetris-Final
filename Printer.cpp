@@ -270,7 +270,7 @@ int Printer::show_logo()
 		i++;
 	}
 	
-	while (_kbhit()) (void)_getche();
+	while (_kbhit()) (void)_getch();
 	system("cls");
 
 	return 0;
@@ -469,7 +469,7 @@ void Printer::show_combo()
     fflush(stdin);
     Sleep(500);
    
-    (void)_getche();
+    (void)_getch();
     system("cls");
     return;
 }

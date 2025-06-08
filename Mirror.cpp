@@ -27,7 +27,7 @@ Mirror::~Mirror() {
 
 int Mirror::operate_key(int keytemp) {
     if (keytemp == EXT_KEY) {
-        keytemp = _getche();
+        keytemp = _getch();
 
         if (keytemp == up) {
             rotate();
@@ -130,7 +130,6 @@ int Mirror::move_block()
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
 							printer.gotoxy(dx * 2 + printer.get_x(), dy + printer.get_y());
-							printf("¡á");
 						}
 					}
 				}

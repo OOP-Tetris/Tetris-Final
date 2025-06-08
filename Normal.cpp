@@ -59,7 +59,6 @@ int Normal::move_block()
 						int dy = curr_block->get_y() + i;
 						if (dx >= 0 && dx <= 14 && dy >= 0 && dy < 20) {
 							printer.gotoxy(dx * 2 + printer.get_x(), dy + printer.get_y());
-							printf("¡á");
 						}
 					}
 				}
