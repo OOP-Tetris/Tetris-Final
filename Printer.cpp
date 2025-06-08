@@ -994,7 +994,7 @@ void Printer::flash_map_border() {
     const int colorCount = sizeof(colors) / sizeof(colors[0]);
 
     // 맵 테두리 위치
-    const int top = 0, left = 5;
+    const int top = 1, left = 5;
     const int width = 12, height = 20;
 
     for (int t = 0; t < 6; ++t) {
