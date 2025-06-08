@@ -255,7 +255,8 @@ int Reverse::move_block() {
 		
 
 		int is_over = merge_block();
-
+        delete curr_block;
+		curr_block = next_block;
 		if (is_over == 3) {
 			return 3;
 		}
@@ -264,8 +265,7 @@ int Reverse::move_block() {
             return 4;
         }
 
-		delete curr_block;
-		curr_block = next_block;
+		
 		//만약 클리어한 라인의 수가 깨야되는 줄의 반이라면 콤보가 발동해 다음블록은 무조건 일자 블록이 나온다
 		if (lines != 0 && stages.get_clear_line(level) / lines == 2) {
         next_block = new Block(stages.get_stick_rate(level), true);
