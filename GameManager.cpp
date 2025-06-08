@@ -42,10 +42,16 @@ int GameManager::input_level() {
             continue;
         }
 
-        // 문자열이 정수형 숫자 하나로만 이루어졌는지 확인 - test: enable level 10
-        if (strlen(buf) <= 2) {
-            //i = buf[0] - '0'; // 문자 → 정수로 변환
-            i = atoi(buf); // 문자열을 정수로 변환
+        bool is_digit_only = true;
+        for (int j = 0; buf[j]; j++) {
+            if (!isdigit(buf[j])) {
+                is_digit_only = false;
+                break;
+            }
+        }
+
+        if (is_digit_only) {
+            i = atoi(buf);
             break;
         }
         else {
