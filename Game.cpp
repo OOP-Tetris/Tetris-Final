@@ -16,12 +16,22 @@ Game::Game() {
 Game::Game(int score) : score(score), lines(0), level(0), is_gameover(0), cleared(false) {}
 
 Game::~Game() {
-    if(curr_block != nullptr)
-    delete curr_block;
-
-  delete keeped_block;
-  if (prev_ghostBlock != nullptr)
-      delete prev_ghostBlock;
+    if (curr_block) {
+        delete curr_block;
+        curr_block = nullptr;
+    }
+    if (next_block) {
+        delete next_block;
+        next_block = nullptr;
+    }
+    if (keeped_block) {
+        delete keeped_block;
+        keeped_block = nullptr;
+    }
+    if (prev_ghostBlock) {
+        delete prev_ghostBlock;
+        prev_ghostBlock = nullptr;
+    }
 }
 
 void Game::run() {
