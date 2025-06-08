@@ -23,7 +23,7 @@ public:
     int check_full_line() override;
 
     //미로 관련 이벤트 처리하는 함수
-     void comboEvent();
+     int comboEvent();
 };
 
 

@@ -1,4 +1,4 @@
-#include "Maze.h"
+﻿#include "Maze.h"
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
@@ -155,7 +155,7 @@ void Maze::init() {
 
     lines = 0;
     cleared = false;
-    comboUsed = false;
+    //comboUsed = false;
 }
 
 void Maze::block_start(Block* b) {
@@ -300,7 +300,7 @@ int Maze::move_block()
         if (  clearedRows * 2 == rows) {
             
           
-            comboUsed = true;
+            //comboUsed = true;
             comboEvent();
             if (check_FirstComb) {
                 //printer.show_combo();
