@@ -64,20 +64,6 @@ bool Maze::isCleared() {
         }
     }
 
-    // 꽉 찼으면 줄 없애고 clearedRows 증가
-    /*for (int j = 1; j < 13; j++) {
-        total_block[checkStart][j] = 0;
-    }
-
-    for (int i = checkStart; i > 0; i--) {
-        for (int j = 1; j < 13; j++) {
-            total_block[i][j] = total_block[i - 1][j];
-        }
-    }
-    for (int j = 1; j < 13; j++) {
-        total_block[0][j] = 0;
-    }*/ //중복호출
-
     clearedRows++;
     if (clearedRows == rows) {
         cleared = true;
@@ -105,37 +91,6 @@ int Maze::comboEvent()
         total_block[19 ][j] = 1;
     check_full_line();
     clearedRows++; // 목표 줄 수도 1줄 줄임!
-     
-
-    //  printer.SetColor(BLUE);
-    // printer.gotoxy(1 * 2 + printer.get_x(), 19 + printer.get_y());
-    // for (int j = 1; j < 13; j++)
-    // {
-    //     printf("□");
-    //     Sleep(10);
-    // }
-    // printer.gotoxy(1 * 2 + printer.get_x(), 19 + printer.get_y());
-    // for (int j = 1; j < 13; j++)
-    // {
-    //     printf("  ");
-    //    Sleep(10);
-    // }
-
-    // // 맨 아래 줄 제거
-    // for (int j = 1; j < 13; j++)
-    //     total_block[19][j] = 0;
-
-    // // 전체 블록 아래로 내림
-    // for (int i = 19; i > 0; i--)
-    //     for (int j = 1; j < 13; j++)
-    //         total_block[i][j] = total_block[i - 1][j];
-
-    // for (int j = 1; j < 13; j++)
-    //    total_block[0][j] = 0;
-
-    // clearedRows++; // 목표 줄 수도 1줄 줄임!
-
-    //
 
     printer.show_total_block(total_block, level);
     printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
@@ -155,7 +110,6 @@ void Maze::init() {
 
     lines = 0;
     cleared = false;
-    //comboUsed = false;
 }
 
 void Maze::block_start(Block* b) {
@@ -271,10 +225,6 @@ int Maze::move_block()
         if (curr_block->get_y() < 0) 
         {
 
-            //printer.SetColor(3);
-            //printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
-            //system("pause");
-
             printer.SetColor(DARK_GRAY);
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
@@ -303,9 +253,6 @@ int Maze::move_block()
             //comboUsed = true;
             comboEvent();
             if (check_FirstComb) {
-                //printer.show_combo();
-                //printer.show_total_block(total_block, level);
-                //printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
                 if (keeped_block != nullptr) {
                     printer.show_keeped_block(*keeped_block, level);
                 }
@@ -316,31 +263,6 @@ int Maze::move_block()
             }
             
         }
-
-        //if (rows <= clearedRows) {
-        //    if (level < 10) {
-        //        lines = 0;
-        //        level++;
-        //        init();
-        //        cleared = true;
-        //        printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
-        //        return 4;
-        //    }
-        //    //만약 레벨이 10이 되는 경우 쇼우 클리어를 진행
-        //    else {
-        //        //show_clear_screen이라는 것에서 1의 값을 받으면 3을 반환
-        //        // --> merge_block()에서 이 값에 따른 반환값을 만들도록함
-        //        //메인 함수에서 is_game_over이 3일때 break함
-        //        //이때 화면에서 show_logo()가 잘 보이지 않는다는 것을 확인하여 show_logo() 앞 cls를 통해 지우고 다시 그리도록 함.
-
-        //        printer.show_total_block(total_block, level);
-        //        lines = 0;
-        //        printer.show_gamestat(level, score, stages.get_clear_line(level) - clearedRows);
-        //        if (printer.show_clear_screen(score)) return 3;
-        //    }
-        //}
-
-        
 
         if (is_over == 3) {
             return 3;

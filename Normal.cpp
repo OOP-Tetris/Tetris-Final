@@ -51,10 +51,6 @@ int Normal::move_block()
 		if (curr_block->get_y() < 0)
 		{
 
-			//printer.SetColor(3);
-			//printf("%d %d \n", curr_block->get_x(), curr_block->get_y());
-			//system("pause");
-
 			printer.SetColor(DARK_GRAY);
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {

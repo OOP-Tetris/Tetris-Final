@@ -7,7 +7,6 @@ using namespace std;
 class Maze : public virtual Game
 {
 protected:
-	//int level;		// 레벨별 row수와 각 줄에 나타나는 빈칸 개수 조정
 	int rows;		// 총 줄 수
 	int spaceNum;	// 한 줄에 나타나는 빈칸 개수
 	int clearedRows; // 깨진 미로 줄 수

@@ -192,28 +192,6 @@ int Printer::show_logo()
 	int i=0,j;
 	SetColor(WHITE);
 	gotoxy(42,3);
-	/*printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-	Sleep(100);
-	gotoxy(13,4);
-	printf("┃ ◆◆◆   ◆◆◆  ◆◆◆    ◆◆     ◆   ◆◆◆ ┃");
-	Sleep(100);
-	gotoxy(13,5);
-	printf("┃  ◆    ◆     ◆     ◆ ◆    ◆   ◆   ┃");
-	Sleep(100);
-	gotoxy(13,6);
-	printf("┃  ◆    ◆◆◆   ◆     ◆◆     ◆    ◆  ┃");
-	Sleep(100);
-	gotoxy(13,7);
-	printf("┃  ◆    ◆     ◆     ◆ ◆    ◆     ◆ ┃");
-	Sleep(100);
-	gotoxy(13,8);
-	printf("┃  ◆    ◆◆◆   ◆     ◆  ◆   ◆   ◆◆◆ ┃");
-	Sleep(100);
-	gotoxy(13,9);
-	printf("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
-	gotoxy(20,20);
-	printf("Please Press Any Key~!");*/
     printf("██╗    ██╗███████╗██╗██████╗ ██████╗");
     Sleep(100);
     gotoxy(42, 4);
