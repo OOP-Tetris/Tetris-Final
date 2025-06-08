@@ -76,14 +76,16 @@ void GameManager::run() {
     while (1) {
         manager_level = input_level(); // GameManager의 현재 레벨을 저장하는 변수
         system("cls");
-
+         Game* game = nullptr;
+        
         if (manager_level == -1) {
-            // game stopped
+            if(game != nullptr){
+                delete game;}
             break;
         }
 
         while (manager_level < 10) { // GameManager의 레벨이 9 미만일 때만 루프
-            Game* game = nullptr;
+            //Game* game = nullptr;
 
             if (manager_level == 0 || manager_level == 3 || manager_level == 6) {
                 if (manager_level == 0) {
